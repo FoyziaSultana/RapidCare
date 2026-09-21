@@ -1,8 +1,30 @@
 import { Cross, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+import { useState, useEffect } from "react";
+import { isLoggedIn, logoutUser } from "../checkLoginStatus/isLoggedIn";
 
 function Navbar() {
+
+  const navigate = useNavigate();
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+      setLoggedIn(isLoggedIn());
+  }, []);
+
+  const handleLogout = () => {
+
+      logoutUser();
+
+      setLoggedIn(false);
+
+      navigate("/");
+  };
+
   return (
-    <header className="w-full bg-white border-b border-slate-200">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-slate-200">
       <nav className="max-w-7xl mx-auto h-[83px] px-6 flex items-center justify-between">
 
         
@@ -124,8 +146,10 @@ function Navbar() {
           </button>
 
 
-          
+        {!loggedIn && (
+    <>  
           <button
+          onClick={() => navigate("/login")}
             className="
               text-sm
               text-xl font-semibold
@@ -140,6 +164,7 @@ function Navbar() {
 
           
           <button
+          onClick={() => navigate("/signup")}
             className="
               px-5 py-2.5
               bg-teal-600
@@ -154,7 +179,22 @@ function Navbar() {
           >
             Get Started
           </button>
-
+        </>
+)}
+{loggedIn && (
+    <>
+        <button
+            onClick={handleLogout}
+            className="
+              px-5 py-2.5 bg-teal-400 hover:bg-red-600 text-white text-lg
+              font-semibold rounded-lg shadow-lg
+              transition-colors duration-200
+            "
+        >
+            Logout
+        </button>
+    </>
+)}
         </div>
 
       </nav>
