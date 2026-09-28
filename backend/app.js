@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 // app create
-const app  = express();
+const app = express();
 
 const bodyParser = require('body-parser');
 
@@ -10,12 +10,23 @@ const bodyParser = require('body-parser');
 const path = require("path");
 
 const AuthRouter = require('./routes/authRouter');
+const permissionRouter = require('./routes/permissionRouter');
+const roleRouter = require("./routes/roleRouter");
+const rolesAssignToUser = require("./routes/userRoleAssignRouter");
+const getUserAllPermissionRouter = require("./routes/getUserAllPermissionRoute");
 
 //use json
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/auth',AuthRouter);
+
+
+app.use('/auth', AuthRouter);
+app.use('/permission', permissionRouter);
+app.use('/role', roleRouter);
+app.use('/user', rolesAssignToUser);
+app.use('/userPermission', getUserAllPermissionRouter);
+
 
 app.use(express.static(
     path.join(__dirname, "../frontend/dist")
@@ -25,6 +36,9 @@ app.get("/{*splat}", (req, res) => {
         path.join(__dirname, "../frontend/dist/index.html")
     );
 });
+
+
+
 
 
 module.exports = app;

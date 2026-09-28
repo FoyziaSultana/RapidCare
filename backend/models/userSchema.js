@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
-    UserName : {
+    UserName: {
         type: String,
         required: true
     },
@@ -18,10 +18,15 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    roles:[{
-        type:mongoose.Schema.ObjectId,
-        ref:"Role"
+    roles: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "Roles"
     }],
+    hospitalId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "HospitalInformations",
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -31,5 +36,5 @@ const UserSchema = new Schema({
         default: Date.now
     }
 });
-const UserModel = mongoose.model("users",UserSchema) ;
+const UserModel = mongoose.model("users", UserSchema);
 module.exports = UserModel;
