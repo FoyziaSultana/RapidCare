@@ -1,0 +1,181 @@
+.dashboard-content {
+    padding: 28px;
+}
+
+
+.welcome-section {
+    margin-bottom: 25px;
+}
+
+.welcome-section h1 {
+    margin: 0;
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+.welcome-section p {
+    margin-top: 7px;
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+
+.stat-card {
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    padding: 21px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+
+    transition: 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+
+.stat-info p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+.stat-info h2 {
+    margin: 8px 0;
+
+    font-size: 29px;
+
+    color: #0f172a;
+}
+
+.stat-info span {
+    font-size: 12px;
+
+    color: #16a34a;
+}
+
+
+.stat-icon {
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.bed-icon {
+    background: #ccfbf1;
+
+    color: #0f766e;
+}
+
+.icu-icon {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.doctor-icon {
+    background: #dbeafe;
+
+    color: #2563eb;
+}
+
+.ambulance-icon {
+    background: #ffedd5;
+
+    color: #ea580c;
+}
+
+.resource-card {
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    margin-top: 22px;
+
+    min-height: 220px;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.resource-card h2 {
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #0f172a;
+}
+
+.resource-card p {
+    margin-top: 7px;
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+@media (max-width: 1100px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-content {
+        padding: 18px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-section h1 {
+        font-size: 22px;
+    }
+
+}

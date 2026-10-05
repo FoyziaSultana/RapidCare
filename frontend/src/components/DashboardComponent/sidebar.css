@@ -1,0 +1,167 @@
+.dashboard-sidebar {
+    width: 250px;
+
+    min-height: 100vh;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e2e8f0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    position: sticky;
+
+    top: 0;
+
+    height: 100vh;
+}
+
+.sidebar-menu {
+    padding: 22px 14px;
+
+    flex: 1;
+
+    overflow-y: auto;
+}
+
+.menu-title {
+    margin: 0 10px 10px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    color: #94a3b8;
+}
+
+.management-title {
+    margin-top: 25px;
+}
+
+
+.sidebar-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    width: 100%;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition: 0.2s;
+}
+
+.sidebar-link:hover {
+    background: #f0fdfa;
+
+    color: #0f766e;
+}
+
+.sidebar-link.active {
+    background: #ccfbf1;
+
+    color: #0f766e;
+
+    font-weight: 600;
+}
+
+
+.sidebar-bottom {
+    padding: 14px;
+
+    border-top: 1px solid #e2e8f0;
+}
+
+.logout-btn {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 11px 12px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+
+@media (max-width: 900px) {
+
+    .dashboard-sidebar {
+        width: 220px;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .dashboard-sidebar {
+        width: 70px;
+    }
+
+    .sidebar-logo {
+        justify-content: center;
+
+        padding: 0;
+    }
+
+    .sidebar-logo > div:last-child {
+        display: none;
+    }
+
+    .sidebar-link {
+        justify-content: center;
+
+        padding: 12px 0;
+    }
+
+    .sidebar-link span,
+    .menu-title {
+        display: none;
+    }
+
+    .sidebar-bottom {
+        padding: 10px;
+    }
+
+}

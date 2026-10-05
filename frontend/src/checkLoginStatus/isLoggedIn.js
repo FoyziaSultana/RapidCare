@@ -10,4 +10,5 @@ export const isLoggedIn = () => {
 export const logoutUser = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("loggedInUser");
+    
 };

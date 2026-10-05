@@ -14,6 +14,8 @@ const permissionRouter = require('./routes/permissionRouter');
 const roleRouter = require("./routes/roleRouter");
 const rolesAssignToUser = require("./routes/userRoleAssignRouter");
 const getUserAllPermissionRouter = require("./routes/getUserAllPermissionRoute");
+const dashboardRouter = require('./routes/dashboardRoute');
+const adminGetAllHospitalRouter = require("./routes/getAllHospitalRoute(Admin)");
 
 //use json
 app.use(express.json());
@@ -26,6 +28,8 @@ app.use('/permission', permissionRouter);
 app.use('/role', roleRouter);
 app.use('/user', rolesAssignToUser);
 app.use('/userPermission', getUserAllPermissionRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/admin', adminGetAllHospitalRouter);
 
 
 app.use(express.static(
