@@ -89,6 +89,14 @@ function AdminHospitals() {
     };
 
 
+
+    /* edit hospital nformation*/
+    const [editHospitalInformation, setEditedHospitalInformation] = useState(null);
+
+    const handleEditHospitalInformation = (hospital) => {
+        setEditedHospitalInformation(hospital);
+    }
+
     return (
 
         <div className="admin-hospitals">
@@ -194,6 +202,10 @@ function AdminHospitals() {
 
                                     )}
 
+                                    <button className="edit-btn" onClick={() => handleEditHospitalInformation(hospital)}
+                                    >
+                                        Edit
+                                    </button>
                                 </td>
 
                             </tr>
@@ -205,6 +217,107 @@ function AdminHospitals() {
                 </table>
 
             </div>
+
+
+
+            {/* Edit hospital INFormation form */}
+
+            {editHospitalInformation && (
+
+                <div className="edit-hospital-card">
+
+                    <h2>Update Hospital Information</h2>
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalName}
+                        onChange={(e) => setEditedHospitalInformation({ ...editHospitalInformation, hospitalName: e.target.value })
+                        }
+                        placeholder="Hospital Name"
+                    />
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalLicence}
+                        onChange={(e) => setEditedHospitalInformation({ ...editHospitalInformation, hospitalLicence: e.target.value })
+                        }
+                        placeholder="Hospital Licence"
+                    />
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalType}
+                        onChange={(e) => setEditedHospitalInformation({ ...editHospitalInformation, hospitalType: e.target.value })
+                        }
+                        placeholder="Hospital Type"
+                    />
+
+                    <input
+                        type="email"
+                        value={editHospitalInformation.hospitalEmail}
+                        onChange={(e) => setEditedHospitalInformation({ ...editHospitalInformation, hospitalEmail: e.target.value })
+                        }
+                        placeholder="Hospital Email"
+                    />
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalPhone}
+                        onChange={(e) => setEditedHospitalInformation({ ...editHospitalInformation, hospitalPhone: e.target.value })
+                        }
+                        placeholder="Hospital Phone"
+                    />
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalAddress}
+                        onChange={(e) => setEditedHospitalInformation({ ...editHospitalInformation, hospitalAddress: e.target.value })
+                        }
+                        placeholder="Hospital Address"
+                    />
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalLocation.coordinates[1]}
+                        onChange={(e) => setEditedHospitalInformation({
+                            ...editHospitalInformation,
+                            hospitalLocation: {
+                                ...editHospitalInformation.hospitalLocation,
+                                coordinates: [
+                                    editHospitalInformation.hospitalLocation.coordinates[0],
+                                    e.target.value
+                                ]
+                            }
+                        })
+                        }
+                        placeholder="Latitude"
+                    />
+
+                    <input
+                        type="text" value={editHospitalInformation.hospitalLocation.coordinates[0]}
+                        onChange={(e) => setEditedHospitalInformation({
+                            ...editHospitalInformation,
+                            hospitalLocation: {
+                                ...editHospitalInformation.hospitalLocation,
+                                coordinates: [e.target.value, editHospitalInformation.hospitalLocation.coordinates[1]]
+                            }
+                        })
+                        }
+                        placeholder="Longitude"
+                    />
+
+                    <div className="edit-buttons">
+
+                        <button className="update-btn">
+                            Update
+                        </button>
+
+                        <button
+                            className="cancel-btn"
+                            onClick={() => setEditedHospitalInformation(null)}
+                        >
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </div>
+
+            )}
 
         </div>
     );
