@@ -97,6 +97,69 @@ function AdminHospitals() {
         setEditedHospitalInformation(hospital);
     }
 
+
+
+
+    {/* update funtion for updating hospital data */ }
+
+    const updateHospital = () => {
+
+        const token = localStorage.getItem("token");
+
+        const latitude = editHospitalInformation.hospitalLocation.coordinates[1];
+        const longitude = editHospitalInformation.hospitalLocation.coordinates[0];
+
+        fetch(`http://localhost:5005/admin/hospitals/${editHospitalInformation._id}`, {
+
+            method: "PATCH",
+
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+
+            body: JSON.stringify({
+                hospitalName: editHospitalInformation.hospitalName,
+                hospitalLicence: editHospitalInformation.hospitalLicence,
+                hospitalType: editHospitalInformation.hospitalType,
+                hospitalEmail: editHospitalInformation.hospitalEmail,
+                hospitalPhone: editHospitalInformation.hospitalPhone,
+                hospitalAddress: editHospitalInformation.hospitalAddress,
+                latitude: latitude,
+                longitude: longitude
+            })
+
+        })
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                console.log("Hospital Update:", data);
+
+                if (data.success) {
+
+                    setEditedHospitalInformation(null);
+                    getHospitals();
+
+                } else {
+
+                    alert(data.message);
+                }
+            })
+
+            .catch(error => {
+
+                console.log("Update Error:", error);
+
+            });
+
+    };
+
+
+
+
+
     return (
 
         <div className="admin-hospitals">
@@ -302,16 +365,9 @@ function AdminHospitals() {
 
                     <div className="edit-buttons">
 
-                        <button className="update-btn">
-                            Update
-                        </button>
+                        <button  className="update-btn" onClick={updateHospital}> Update </button>
 
-                        <button
-                            className="cancel-btn"
-                            onClick={() => setEditedHospitalInformation(null)}
-                        >
-                            Cancel
-                        </button>
+                        <button className="cancel-btn" onClick={() => setEditedHospitalInformation(null)}> Cancel </button>
 
                     </div>
 
