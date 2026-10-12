@@ -226,8 +226,38 @@ function AdminHospitals() {
 
 
     {/* Delete hosptal Function */ }
+    const deleteHospital = async (hospitalId) => {
+        const confirmDelete = window.confirm("Are you sure to delete this hospital?");
+        if (!confirmDelete) {
+            return;
+        }
 
-    
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`http://localhost:5005/dashboard/hospitals/${hospitalId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                handleSuccess(data.message);
+                getHospitals();
+            }
+            else {
+                handleError(data.message || "Hospital delete failed!");
+            }
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
     return (
 
         <div className="admin-hospitals">
@@ -337,7 +367,13 @@ function AdminHospitals() {
                                         Edit
                                     </button>)}
 
-                                    
+                                    {hasPermission("delete_hospital") && (
+                                        <button className="delete-btn" onClick={() => deleteHospital(hospital._id)}>
+                                            Delete
+                                        </button>
+                                    )}
+
+
 
 
                                 </td>
