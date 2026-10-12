@@ -29,7 +29,7 @@ app.use('/role', roleRouter);
 app.use('/user', rolesAssignToUser);
 app.use('/userPermission', getUserAllPermissionRouter);
 app.use('/dashboard', dashboardRouter);
-app.use('/admin', adminGetAllHospitalRouter);
+app.use('/dashboard', adminGetAllHospitalRouter);
 
 
 app.use(express.static(

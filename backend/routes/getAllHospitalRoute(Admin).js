@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { getAllHospitals, updateHospitalStatus, updateHospital } = require("../controllers/getAllHospitalList(admin)Controller");
+const { getAllHospitals, updateHospitalStatus, updateHospital, deleteHospital,  } = require("../controllers/getAllHospitalList(admin)Controller");
 
 const authMiddleware = require("../middleware/authMiddleware");
 
@@ -14,13 +14,15 @@ router.get("/hospitals", authMiddleware, permissionMiddleware("view_hospital"), 
 
 
 // update hospital status pending to accept or reject
-router.patch("/hospitals/:hospitalId/status", authMiddleware, permissionMiddleware("manage_hospital"),
-updateHospitalStatus );
+router.patch("/hospitals/:hospitalId/status", authMiddleware, permissionMiddleware("manage_hospital"), updateHospitalStatus );
 
 
 //Update hosiptal information
-router.patch("/hospitals/:hospitalId",authMiddleware,permissionMiddleware("manage_hospital"),
-    updateHospital
-);
+router.patch("/hospitals/:hospitalId",authMiddleware,permissionMiddleware("manage_hospital"), updateHospital );
+
+
+// Delete hospital
+router.delete("/hospitals/:hospitalId", authMiddleware, permissionMiddleware("delete_hospital"), deleteHospital );
+
 
 module.exports = router;

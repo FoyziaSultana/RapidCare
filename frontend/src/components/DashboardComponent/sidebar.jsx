@@ -5,6 +5,7 @@ import {
 
 import { useState, useEffect } from "react";
 
+import { Link } from "react-router-dom";
 import "./sidebar.css";
 
 function Sidebar() {
@@ -81,13 +82,13 @@ function Sidebar() {
 
                 {hasPermission("view_hospital") && (
 
-                    <a href="#" className="sidebar-link">
+                    <Link to = "/dashboard/hospitals" className="sidebar-link">
 
                         <Hospital size={19} />
 
                         <span>Hospitals</span>
 
-                    </a>
+                    </Link>
 
                 )}
 

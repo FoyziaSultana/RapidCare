@@ -2,16 +2,24 @@
 import { useEffect, useState } from "react";
 import "./adminGetAllHospital.css"
 
+import { handleError, handleSuccess } from "../toastmsg"
+import { ToastContainer } from 'react-toastify';
+
+
 function AdminHospitals() {
 
     const [hospitals, setHospitals] = useState([]);
+
+    const [permissions, setPermissions] = useState([]);
+
+
 
 
     const getHospitals = () => {
 
         const token = localStorage.getItem("token");
 
-        fetch("http://localhost:5005/admin/hospitals", {
+        fetch("http://localhost:5005/dashboard/hospitals", {
 
             headers: {
                 Authorization: `Bearer ${token}`
@@ -38,11 +46,62 @@ function AdminHospitals() {
     };
 
 
+
+
+
+
+    const getPermissions = () => {
+
+        const token = localStorage.getItem("token");
+
+        fetch("http://localhost:5005/userPermission/permissions", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+            .then(response => response.json())
+
+            .then(data => {
+                if (data.success) {
+                    setPermissions(data.permissions);
+                }
+            })
+
+            .catch(error => {
+                console.log("Permission Error:", error);
+            });
+
+    };
+
+
+
+
+
+    {/* has permission funtion to check weather permission is valid or not */ }
+
+    const hasPermission = (permissionName) => {
+        return permissions.includes(permissionName);
+    };
+
+
+
+
+
+
+
     useEffect(() => {
 
         getHospitals();
+        getPermissions();
 
     }, []);
+
+
+
+
+
+
 
 
     const updateStatus = (hospitalId, status) => {
@@ -51,7 +110,7 @@ function AdminHospitals() {
 
 
         fetch(
-            `http://localhost:5005/admin/hospitals/${hospitalId}/status`,
+            `http://localhost:5005/dashboard/hospitals/${hospitalId}/status`,
             {
                 method: "PATCH",
 
@@ -90,8 +149,17 @@ function AdminHospitals() {
 
 
 
+
+
+
+
+
+
     /* edit hospital nformation*/
     const [editHospitalInformation, setEditedHospitalInformation] = useState(null);
+
+
+
 
     const handleEditHospitalInformation = (hospital) => {
         setEditedHospitalInformation(hospital);
@@ -109,7 +177,7 @@ function AdminHospitals() {
         const latitude = editHospitalInformation.hospitalLocation.coordinates[1];
         const longitude = editHospitalInformation.hospitalLocation.coordinates[0];
 
-        fetch(`http://localhost:5005/admin/hospitals/${editHospitalInformation._id}`, {
+        fetch(`http://localhost:5005/dashboard/hospitals/${editHospitalInformation._id}`, {
 
             method: "PATCH",
 
@@ -130,7 +198,6 @@ function AdminHospitals() {
             })
 
         })
-
             .then(response => response.json())
 
             .then(data => {
@@ -153,13 +220,14 @@ function AdminHospitals() {
                 console.log("Update Error:", error);
 
             });
-
     };
 
 
 
 
+    {/* Delete hosptal Function */ }
 
+    
     return (
 
         <div className="admin-hospitals">
@@ -243,32 +311,35 @@ function AdminHospitals() {
 
                                         <div className="action-buttons">
 
-                                            <button
+                                            {hasPermission("approve_hospital") && (<button
                                                 className="approve-btn" onClick={() => updateStatus(
                                                     hospital._id, "approved"
                                                 )
                                                 }
                                             >
                                                 Approve
-                                            </button>
+                                            </button>)}
 
 
-                                            <button
+                                            {hasPermission("reject_hospital") && (<button
                                                 className="reject-btn" onClick={() => updateStatus(
                                                     hospital._id, "rejected"
                                                 )}
                                             >
                                                 Reject
-                                            </button>
+                                            </button>)}
 
                                         </div>
 
                                     )}
 
-                                    <button className="edit-btn" onClick={() => handleEditHospitalInformation(hospital)}
-                                    >
+                                    {hasPermission("update_hospital") && (<button className="edit-btn" onClick={() => handleEditHospitalInformation(hospital)}>
                                         Edit
-                                    </button>
+                                    </button>)}
+
+                                    
+
+
                                 </td>
 
                             </tr>
@@ -283,9 +354,14 @@ function AdminHospitals() {
 
 
 
+
+
+
+
             {/* Edit hospital INFormation form */}
 
-            {editHospitalInformation && (
+
+            {editHospitalInformation && hasPermission("update_hospital") && (
 
                 <div className="edit-hospital-card">
 
@@ -365,7 +441,7 @@ function AdminHospitals() {
 
                     <div className="edit-buttons">
 
-                        <button  className="update-btn" onClick={updateHospital}> Update </button>
+                        <button className="update-btn" onClick={updateHospital}> Update </button>
 
                         <button className="cancel-btn" onClick={() => setEditedHospitalInformation(null)}> Cancel </button>
 
@@ -378,6 +454,10 @@ function AdminHospitals() {
         </div>
     );
 }
+
+
+
+
 
 export default AdminHospitals;
 

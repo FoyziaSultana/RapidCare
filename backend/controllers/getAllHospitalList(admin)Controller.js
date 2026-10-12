@@ -55,6 +55,8 @@ const updateHospitalStatus = async (req, res) => {
 };
 
 
+
+
 const getAllHospitals = async (req, res) => {
 
     try {
@@ -78,6 +80,8 @@ const getAllHospitals = async (req, res) => {
     }
 
 };
+
+
 
 
 const updateHospital = async (req, res) => {
@@ -150,4 +154,38 @@ const updateHospital = async (req, res) => {
 
 };
 
-module.exports = { getAllHospitals, updateHospitalStatus, updateHospital };
+
+
+
+const deleteHospital = async (req, res) => {
+
+    try {
+
+        const { hospitalId } = req.params;
+
+        const hospital = await HospitalModel.findById(hospitalId);
+
+        if (!hospital) {
+            return res.status(404).json({
+                message: "Hospital not found!", success: false
+            });
+        }
+
+        await HospitalModel.findByIdAndDelete(hospitalId);
+
+        res.status(200).json({
+            message: "Hospital deleted successfully",
+            success: true
+        });
+
+    }
+    catch (error) {
+
+        res.status(500).json({ message: "Server error", success: false });
+    }
+
+};
+
+
+
+module.exports = { getAllHospitals, updateHospitalStatus, updateHospital, deleteHospital };

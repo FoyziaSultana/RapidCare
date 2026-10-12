@@ -222,13 +222,31 @@
     color: #0369a1;
     border: none;
     border-radius: 7px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
 }
 
 .edit-btn:hover {
     background: #bae6fd;
+}
+
+.delete-btn {
+    margin-top: 6px;
+    margin-left: 6px;
+    padding: 7px 14px;
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background: #fecaca;
 }
 
 @media (max-width: 600px) {

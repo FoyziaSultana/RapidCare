@@ -27,7 +27,7 @@ function App() {
 
           <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
 
-          <Route path="/admin/hospitals" element={ <ProtectedRoute> <AdminGetAllHospitals /> </ProtectedRoute> } />
+          <Route path="/dashboard/hospitals" element={ <ProtectedRoute> <AdminGetAllHospitals /> </ProtectedRoute> } />
         
         </Routes>
 
