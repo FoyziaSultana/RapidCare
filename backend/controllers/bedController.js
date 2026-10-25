@@ -1,41 +1,39 @@
 const BedModel = require('../models/hospitalBedModel');
 const UserModel = require("../models/userSchema");
-const createBed = async(req,res)=>{
-    try{
+const createBed = async (req, res) => {
+    try {
         const { bedType, totalBeds, availableBeds } = req.body;
         const user = await UserModel.findById(req.user._id);
         if (!user) {
-            return res.status(404).json({ message: "User not found!", success: false
+            return res.status(404).json({
+                message: "User not found!", success: false
             });
         }
         const hospitalId = user.hospitalId;
-        if(!hospitalId)
-        {
+        if (!hospitalId) {
             return res.status(403).json({
-                message:"You are not assigned to any hospital!", success: false
+                message: "You are not assigned to any hospital!", success: false
             });
         }
 
-        if(availableBeds > totalBeds)
-        {
+        if (availableBeds > totalBeds) {
             return res.status(403).json({
-                message:"Available beds can not exceed total beds!", success: false
+                message: "Available beds can not exceed total beds!", success: false
             });
         }
         const occupiedBeds = totalBeds - availableBeds;
 
-        const bed = new BedModel ({ hospitalId, bedType, totalBeds, occupiedBeds, availableBeds });
+        const bed = new BedModel({ hospitalId, bedType, totalBeds, occupiedBeds, availableBeds });
         await bed.save();
         res.status(200).json({
             message: "Bed created succesfully.", success: true
         });
 
-    } catch(error)
-    {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
-            
-            message:"Server error!", success:false
+
+            message: "Server error!", success: false
         });
     }
 
@@ -48,7 +46,8 @@ const viewBeds = async (req, res) => {
         const user = await UserModel.findById(req.user._id);
 
         if (!user) {
-            return res.status(404).json({ message: "User not found!", success: false
+            return res.status(404).json({
+                message: "User not found!", success: false
             });
         }
 
@@ -66,9 +65,39 @@ const viewBeds = async (req, res) => {
         });
 
     } catch (error) {
-        return res.status(500).json({ message: "Server error", success: false
+        return res.status(500).json({
+            message: "Server error", success: false
         });
     }
 };
 
-module.exports = { createBed, viewBeds  };
+
+const updateBed = async (req, res) => {
+    try {
+        const { bedId } = req.params;
+        const { totalBeds, availableBeds } = req.body;
+
+        const bed = await BedModel.findById(bedId);
+
+        if (!bed) {
+            return res.status(404).json({ message: "Bed not found!", success: false });
+        }
+
+        bed.totalBeds = totalBeds;
+        bed.availableBeds = availableBeds;
+        const occupiedBeds = totalBeds - availableBeds;
+        bed.occupiedBeds = occupiedBeds;
+        await bed.save();
+
+        res.status(200).json({
+            message: "Bed updated successfully!",
+            success: true,
+            bed
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error", success: false });
+    }
+};
+
+module.exports = { createBed, viewBeds, updateBed };
