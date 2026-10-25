@@ -3,7 +3,12 @@ const BedModel = require('../models/hospitalBedModel');
 const createBed = async(req,res)=>{
     try{
         const { bedType, totalBeds, availableBeds } = req.body;
-        const hospitalId = req.user.hospitalId;
+        const user = await UserModel.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found!", success: false
+            });
+        }
+        const hospitalId = user.hospitalId;
         if(!hospitalId)
         {
             return res.status(403).json({
