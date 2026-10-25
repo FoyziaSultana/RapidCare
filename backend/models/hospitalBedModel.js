@@ -24,7 +24,6 @@ const bedSchema = new Schema({
 
     occupiedBeds: {
         type: Number,
-        required: true,
         min: 0
     },
 
