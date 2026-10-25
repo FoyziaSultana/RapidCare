@@ -6,5 +6,5 @@ const permissionMiddleware = require("../middleware/permissionMiddlewareForacces
 const { createBed } = require("../controllers/bedController");
 
 router.post("/create", authMiddleware, permissionMiddleware("create_bed"),createBed);
-
+router.get("/view", authMiddleware, permissionMiddleware("view_bed"), viewBeds);
 module.exports = router;
