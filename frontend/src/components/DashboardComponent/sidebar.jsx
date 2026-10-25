@@ -96,13 +96,13 @@ function Sidebar() {
 
                 {hasPermission("view_bed") && (
 
-                    <a href="#" className="sidebar-link">
+                    <Link to ="/dashboard/beds" className="sidebar-link">
 
                         <BedDouble size={19} />
 
                         <span>Beds</span>
 
-                    </a>
+                    </Link>
 
                 )}
 

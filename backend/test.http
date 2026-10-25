@@ -1,0 +1,12 @@
+
+PUT http://localhost:5005/user/assignRoles
+Content-Type: application/json
+
+{
+    "userId": "6adddcaf79d25ea4dab74ba8",
+    "roles": [
+        "6acbb0c75014b0da4dbd2efa"
+
+    ]
+   
+}

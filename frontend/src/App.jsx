@@ -11,6 +11,7 @@ import Dashboard from "./pages/DashBoard";
 import DashboardMainContent from "./components/DashboardComponent/dashboardMainContent";
 import ProtectedRoute from "./components/protectedRoute";
 import AdminGetAllHospitals from "./pages/adminGetAllHospital"
+import Bed from "./components/DashboardComponent/hospitalBed";
 
 function App() {
   return (
@@ -28,7 +29,10 @@ function App() {
 
           <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>}>
             <Route index element={<DashboardMainContent />} />
-            <Route path="hospitals" element={<AdminGetAllHospitals />} /> </Route>
+            <Route path="hospitals" element={<AdminGetAllHospitals />} /> 
+            <Route path="beds" element={<Bed />} />
+            </Route>
+            
 
         </Routes>
 

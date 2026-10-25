@@ -1,5 +1,5 @@
 const BedModel = require('../models/hospitalBedModel');
-
+const UserModel = require("../models/userSchema");
 const createBed = async(req,res)=>{
     try{
         const { bedType, totalBeds, availableBeds } = req.body;
@@ -32,7 +32,9 @@ const createBed = async(req,res)=>{
 
     } catch(error)
     {
+        console.log(error);
         res.status(500).json({
+            
             message:"Server error!", success:false
         });
     }

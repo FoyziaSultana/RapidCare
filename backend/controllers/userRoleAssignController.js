@@ -26,7 +26,11 @@ const rolesAssignToUser = async (req, res) => {
             });
         }
 
-        user.roles = roles;
+        roles.forEach((id) => {
+            if (!user.roles.includes(id)) {
+                user.roles.push(id);
+            }
+        });
 
         await user.save();
 
