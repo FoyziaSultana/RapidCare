@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Sidebar from "../components/DashboardComponent/sidebar";
 import DashboardContent from "../components/DashboardComponent/dashboardMainContent";
 import "./Dashboard.css";
@@ -12,7 +13,7 @@ function Dashboard() {
 
             <div className="dashboard-main">
 
-                <DashboardContent />
+                <Outlet />
 
             </div>
 
