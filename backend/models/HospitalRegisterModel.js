@@ -41,6 +41,23 @@ const hospitalSchema = new Schema({
             required: true
         }
     },
+    hospitalManagerName: {
+        type: String,
+        required: true
+    },
+    hospitalManagerEmail: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    hospitalManagerPhone: {
+        type: String,
+        required: true
+    },
+    hospitalManagerPassword: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         enum: ["pending", "approved", "rejected"],

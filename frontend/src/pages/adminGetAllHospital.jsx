@@ -336,46 +336,49 @@ function AdminHospitals() {
 
 
                                 <td>
+                                    <div className="action-buttons">
 
-                                    {hospital.status === "pending" && (
-
-                                        <div className="action-buttons">
-
-                                            {hasPermission("approve_hospital") && (<button
-                                                className="approve-btn" onClick={() => updateStatus(
-                                                    hospital._id, "approved"
-                                                )
-                                                }
-                                            >
-                                                Approve
-                                            </button>)}
-
-
-                                            {hasPermission("reject_hospital") && (<button
-                                                className="reject-btn" onClick={() => updateStatus(
-                                                    hospital._id, "rejected"
+                                        {hospital.status === "pending" && (
+                                            <>
+                                                {hasPermission("approve_hospital") && (
+                                                    <button
+                                                        className="approve-btn"
+                                                        onClick={() => updateStatus(hospital._id, "approved")}
+                                                    >
+                                                        Approve
+                                                    </button>
                                                 )}
+
+                                                {hasPermission("reject_hospital") && (
+                                                    <button
+                                                        className="reject-btn"
+                                                        onClick={() => updateStatus(hospital._id, "rejected")}
+                                                    >
+                                                        Reject
+                                                    </button>
+                                                )}
+                                            </>
+                                        )}
+
+                                        {hasPermission("update_hospital") && (
+                                            <button
+                                                className="edit-btn"
+                                                onClick={() => handleEditHospitalInformation(hospital)}
                                             >
-                                                Reject
-                                            </button>)}
+                                                Edit
+                                            </button>
+                                        )}
 
-                                        </div>
+                                        {hasPermission("delete_hospital") && (
+                                            <button
+                                                className="delete-btn"
+                                                onClick={() => deleteHospital(hospital._id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        )}
 
-                                    )}
-
-                                    {hasPermission("update_hospital") && (<button className="edit-btn" onClick={() => handleEditHospitalInformation(hospital)}>
-                                        Edit
-                                    </button>)}
-
-                                    {hasPermission("delete_hospital") && (
-                                        <button className="delete-btn" onClick={() => deleteHospital(hospital._id)}>
-                                            Delete
-                                        </button>
-                                    )}
-
-
-
-
+                                    </div>
                                 </td>
 
                             </tr>

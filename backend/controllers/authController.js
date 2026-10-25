@@ -50,11 +50,18 @@ const login = async (req, res) => {
 
 const hospitalRegister = async (req, res) => {
     try {
-        const { hospitalName, hospitalLicence, hospitalType, hospitalEmail, hospitalPhone, hospitalAddress, latitude, longitude } = req.body;
+        const { hospitalName, hospitalLicence, hospitalType, hospitalEmail, hospitalPhone, hospitalAddress, latitude, longitude,hospitalManagerName, hospitalManagerEmail, hospitalManagerPhone, hospitalManagerPassword } = req.body;
         const hospital = await HospitalModel.findOne({ hospitalEmail });
         if (hospital) {
             return res.status(409).json({ message: 'Hospital alreasdy exists!', success: false });
         }
+        const existingUser = await UserModel.findOne({
+            UserEmail: hospitalManagerEmail
+        });
+        if (existingUser) {
+            return res.status(409).json({message: "Manager email already exists!",success: false });
+        }
+        const hashedPassword = await bcrypt.hash(hospitalManagerPassword,10);
         const newHospital = new HospitalModel({
             hospitalName, hospitalLicence, hospitalType, hospitalEmail, hospitalPhone, hospitalAddress, hospitalLocation: {
                 type: "Point",
@@ -62,11 +69,12 @@ const hospitalRegister = async (req, res) => {
                     Number(longitude),
                     Number(latitude)
                 ]
-            }
+            },
+            hospitalManagerName, hospitalManagerEmail, hospitalManagerPhone, hospitalManagerPassword: hashedPassword, status: "pending"
         });
 
         await newHospital.save();
-        res.status(201).json({ message: "Hospital Registration successful", success: true });
+        res.status(201).json({ message: "Waiting for approval", success: true });
     }
     catch (error) {
         res.status(500).json({ message: "Server error", success: false });

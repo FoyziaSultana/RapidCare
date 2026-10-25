@@ -95,7 +95,15 @@
 
 .action-buttons {
     display: flex;
+    align-items: center;
     gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.action-buttons button {
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .approve-btn,
@@ -216,7 +224,6 @@
 }
 
 .edit-btn {
-    margin-top: 6px;
     padding: 7px 14px;
     background: #e0f2fe;
     color: #0369a1;
@@ -232,8 +239,6 @@
 }
 
 .delete-btn {
-    margin-top: 6px;
-    margin-left: 6px;
     padding: 7px 14px;
     background: #fee2e2;
     color: #b91c1c;

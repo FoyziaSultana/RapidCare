@@ -1,4 +1,5 @@
 const HospitalModel = require("../models/HospitalRegisterModel");
+const UserModel = require("../models/userSchema");
 const updateHospitalStatus = async (req, res) => {
 
     try {
@@ -7,14 +8,8 @@ const updateHospitalStatus = async (req, res) => {
         const { status } = req.body;
 
 
-        if (
-            status !== "approved" &&
-            status !== "rejected"
-        ) {
-            return res.status(400).json({
-                message: "Invalid status!",
-                success: false
-            });
+        if (status !== "approved" && status !== "rejected") {
+            return res.status(400).json({ message: "Invalid status!", success: false });
         }
 
 
@@ -27,7 +22,29 @@ const updateHospitalStatus = async (req, res) => {
                 success: false
             });
         }
+        if (status === "approved") {
 
+            const existingUser = await UserModel.findOne({
+                UserEmail: hospital.hospitalManagerEmail
+            });
+
+            if (existingUser) {
+                return res.status(409).json({
+                    message: "Manager email already exists!", success: false
+                });
+            }
+
+            const newUser = new UserModel({
+                UserName: hospital.hospitalManagerName,
+                UserEmail: hospital.hospitalManagerEmail,
+                UserPhone: hospital.hospitalManagerPhone,
+                UserPassword: hospital.hospitalManagerPassword,
+                roles: [],
+                hospitalId: hospital._id
+            });
+
+            await newUser.save();
+        }
 
         hospital.status = status;
 
@@ -35,23 +52,16 @@ const updateHospitalStatus = async (req, res) => {
 
         await hospital.save();
 
-
         res.status(200).json({
             message: `Hospital ${status} successfully`,
             success: true
         });
 
     }
-
     catch (error) {
-
-        res.status(500).json({
-            message: "Server error",
-            success: false
-        });
-
+        console.error("Hospital Status Update Error:", error);
+        res.status(500).json({ message: "Server error", success: false });
     }
-
 };
 
 

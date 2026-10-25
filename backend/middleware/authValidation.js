@@ -37,7 +37,11 @@ const hospitalRegisterValidation = (req, res, next) => {
         hospitalPhone: Joi.string().pattern(/^01[3-9]\d{8}$/).required(),
         hospitalAddress: Joi.string().required(),
         latitude: Joi.number().required(),
-        longitude: Joi.number().required()
+        longitude: Joi.number().required(),
+        hospitalManagerName:Joi.string().min(3).max(500).required(),
+        hospitalManagerEmail:Joi.string().email().required(),
+        hospitalManagerPhone:Joi.string().pattern(/^01[3-9]\d{8}$/).required(),
+        hospitalManagerPassword: Joi.string().min(8).max(15).required()
     });
     const { error } = schema.validate(req.body);
     if (error) {
