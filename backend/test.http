@@ -1,9 +1,0 @@
-PUT http://localhost:5005/bed/update/6ade37813967c57e4b6661c6
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyRW1haWwiOiJzaWRkaWtrQGdhbWlsLmNvbSIsIl9pZCI6IjZhZGRkY2FmNzlkMjVlYTRkYWI3NGJhOCIsImlhdCI6MTc5Mjk1Nzg0OSwiZXhwIjoxNzkzMDQ0MjQ5fQ.Iqw_cCVZ9I7UEVKrtRhnL7Jl2Z-RIf4AcbmnRJeTCoQ
-
-{
-    "totalBeds": 50,
-    "availableBeds": 20
-}
-

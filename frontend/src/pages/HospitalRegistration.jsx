@@ -64,7 +64,7 @@ function HospitalRegistration() {
             return handleError("Fillup all hospital manager information");
         }
         try {
-            const url = "http://localhost:5005/auth/hospitalRegister";
+            const url = `${import.meta.env.VITE_API_URL}/auth/hospitalRegister`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {

@@ -19,7 +19,7 @@ function AdminHospitals() {
 
         const token = localStorage.getItem("token");
 
-        fetch("http://localhost:5005/dashboard/hospitals", {
+        fetch(`${import.meta.env.VITE_API_URL}/dashboard/hospitals`, {
 
             headers: {
                 Authorization: `Bearer ${token}`
@@ -54,7 +54,7 @@ function AdminHospitals() {
 
         const token = localStorage.getItem("token");
 
-        fetch("http://localhost:5005/userPermission/permissions", {
+        fetch(`${import.meta.env.VITE_API_URL}/userPermission/permissions`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -110,7 +110,7 @@ function AdminHospitals() {
 
 
         fetch(
-            `http://localhost:5005/dashboard/hospitals/${hospitalId}/status`,
+            `${import.meta.env.VITE_API_URL}/dashboard/hospitals/${hospitalId}/status`,
             {
                 method: "PATCH",
 
@@ -177,7 +177,7 @@ function AdminHospitals() {
         const latitude = editHospitalInformation.hospitalLocation.coordinates[1];
         const longitude = editHospitalInformation.hospitalLocation.coordinates[0];
 
-        fetch(`http://localhost:5005/dashboard/hospitals/${editHospitalInformation._id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/dashboard/hospitals/${editHospitalInformation._id}`, {
 
             method: "PATCH",
 
@@ -235,7 +235,7 @@ function AdminHospitals() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch(`http://localhost:5005/dashboard/hospitals/${hospitalId}`,
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/dashboard/hospitals/${hospitalId}`,
                 {
                     method: "DELETE",
                     headers: {

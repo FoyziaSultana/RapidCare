@@ -37,7 +37,7 @@ function Bed() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "http://localhost:5005/bed/create",
+                `${import.meta.env.VITE_API_URL}/bed/create`,
                 {
                     method: "POST",
                     headers: {
