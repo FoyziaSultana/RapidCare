@@ -32,14 +32,13 @@ app.use('/dashboard', dashboardRouter);
 app.use('/dashboard', adminGetAllHospitalRouter);
 app.use("/bed", bedRouter);
 
-app.use(express.static(
-    path.join(__dirname, "../frontend/dist")
-));
-app.get("/{*splat}", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "../frontend/dist/index.html")
-    );
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "RapidCare API is running"
+    });
 });
+
+module.exports = app;
 
 
 
