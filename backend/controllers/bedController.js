@@ -100,4 +100,22 @@ const updateBed = async (req, res) => {
     }
 };
 
-module.exports = { createBed, viewBeds, updateBed };
+const deleteBed = async (req, res) => {
+    try {
+        const { bedId } = req.params;
+
+        const bed = await BedModel.findById(bedId);
+
+        if (!bed) {
+            return res.status(404).json({ message: "Bed not found!", success: false });
+        }
+
+        await BedModel.findByIdAndDelete(bedId);
+
+        return res.status(200).json({ message: "Bed deleted successfully!", success: true });
+
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", success: false });
+    }
+};
+module.exports = { createBed, viewBeds, updateBed, deleteBed  };
