@@ -1,21 +1,17 @@
 
-// require mongoose to use mongodb
-const  mongoose = require("mongoose");
-
-// import config to use mongoDB url
+const mongoose = require("mongoose");
 const config = require("./serverport");
 
-
-// dbURL contain mongoDB atlas url
 const dbURL = config.db.url;
 
-mongoose.connect(dbURL)
-.then(()=>{
-    console.log('mongodb atlas is connected');
-})
-.catch((error)=>
-{
-    console.log(error);
-    process.exit(1);
-});
+const dbconnect = async () => {
+    try {
+        await mongoose.connect(dbURL);
+        console.log("MongoDB Atlas is connected");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
+        throw error;
+    }
+};
 
+module.exports = dbconnect;
