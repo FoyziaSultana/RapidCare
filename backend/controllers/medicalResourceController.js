@@ -69,5 +69,33 @@ const viewMedicalResources = async (req, res) => {
     }
 };
 
+const updateMedicalResource = async (req, res) => {
+    try {
+        const { medicalResourceId } = req.params;
+        const { medicalResourceName, totalMedicalResource, availableMedicalResource } = req.body;
 
-module.exports = { createMedicalResource, viewMedicalResources};
+        const medicalResource = await medicalResourceModel.findById(bedId);
+
+        if (!medicalResource) {
+            return res.status(404).json({ message: "This resource not found!", success: false });
+        }
+
+        medicalResource.medicalResourceName = medicalResourceName;
+        medicalResource.totalMedicalResource = totalMedicalResource;
+        medicalResource.availableMedicalResource = availableMedicalResource;
+        const occupiedMedicalResource = totalMedicalResource - availableMedicalResource;
+        medicalResource.occupiedMedicalResource = occupiedMedicalResource;
+        await medicalResource.save();
+
+        res.status(200).json({
+            message: "Medical resource updated successfully!",
+            success: true,
+            medicalResource
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error", success: false });
+    }
+};
+
+module.exports = { createMedicalResource, viewMedicalResources, updateMedicalResource};
