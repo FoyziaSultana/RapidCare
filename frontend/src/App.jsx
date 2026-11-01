@@ -15,7 +15,7 @@ import Bed from "./components/DashboardComponent/hospitalBed";
 import AddBed from "./components/DashboardComponent/addBed";
 import EditBed from "./components/DashboardComponent/editBed";
 import GetAllMedicalResource from "./components/DashboardComponent/getAllMedicalResource";
-import addMedicalResource from "./components/DashboardComponent/addMedicalResource";
+// import addMedicalResource from "./components/DashboardComponent/addMedicalResource";
 function App() {
   return (
     <div className="App">

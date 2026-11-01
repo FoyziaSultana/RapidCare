@@ -5,12 +5,12 @@ import { ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Bed() {
+function medicalResource() {
 
     const navigate = useNavigate();
 
     const [permissions, setPermissions] = useState([]);
-    const [beds, setBeds] = useState([]);
+    const [medicalResource, setmedicalResource] = useState([]);
     const [permissionLoading, setPermissionLoading] = useState(true);
 
     const getPermissions = () => {
@@ -44,14 +44,14 @@ function Bed() {
     };
     
 
-    const getBeds = async () => {
+    const getMedicalResources = async () => {
 
         try {
 
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `${import.meta.env.VITE_API_URL}/bed/view`,
+                `${import.meta.env.VITE_API_URL}/medicalResource/view`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -62,9 +62,9 @@ function Bed() {
             const result = await response.json();
 
             if (result.success) {
-                setBeds(result.beds);
+                setmedicalResource(result.medicalResource);
             } else {
-                handleError("Failed to load beds!");
+                handleError("Failed to load medical resources!");
             }
 
         } catch (error) {
@@ -77,15 +77,15 @@ function Bed() {
 
     useEffect(() => {
 
-        getBeds();
+        getMedicalResources();
         getPermissions();
 
     }, []);
 
-    const deleteBed = async (bedId) => {
+    const deleteMedicalResources = async (medicalResourceId) => {
 
         const confirmDelete = window.confirm(
-            "Are you sure you want to delete this bed?"
+            "Are you sure you want to delete this resource?"
         );
 
         if (!confirmDelete) return;
@@ -95,7 +95,7 @@ function Bed() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `${import.meta.env.VITE_API_URL}/bed/delete/${bedId}`,
+                `${import.meta.env.VITE_API_URL}/medicalResource/delete/${medicalResourceId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -109,11 +109,11 @@ function Bed() {
             if (result.success) {
 
                 handleSuccess(result.message);
-                getBeds();
+                getMedicalResources();
 
             } else {
 
-                handleError(result.message || "Bed delete failed!");
+                handleError(result.message || "Medical resource delete failed!");
 
             }
 
@@ -135,22 +135,22 @@ function Bed() {
 
             <div className="bed-list-header">
 
-                <h2>All Beds</h2>
+                <h2>All Medical resources</h2>
 
-                {hasPermission("create_bed") && (
+                {hasPermission("create_medical_resource") && (
 
                     <button
                         className="create-bed-btn"
-                        onClick={() => navigate("/dashboard/beds/add")}
+                        onClick={() => navigate("/dashboard/medicalResource/add")}
                     >
-                        + Add Bed
+                        + Add resources
                     </button>
 
                 )}
 
             </div>
 
-            {hasPermission("view_bed") ? (
+            {hasPermission("view_medical_resource") ? (
 
                 <div className="bed-table-card">
 
@@ -161,12 +161,12 @@ function Bed() {
                             <tr>
 
                                 <th>SL</th>
-                                <th>Bed Type</th>
-                                <th>Total Beds</th>
-                                <th>Available Beds</th>
+                                <th>Resource Name</th>
+                                <th>Total Resources</th>
+                                <th>Available Resources</th>
 
-                                {(hasPermission("update_bed") ||
-                                    hasPermission("delete_bed")) && (
+                                {(hasPermission("update_medical_resource") ||
+                                    hasPermission("delete_medical_resource")) && (
 
                                     <th>Action</th>
 
@@ -178,26 +178,26 @@ function Bed() {
 
                         <tbody>
 
-                            {beds.length > 0 ? (
+                            {medicalResource.length > 0 ? (
 
-                                beds.map((bed, index) => (
+                                medicalResource.map((medicalResource, index) => (
 
-                                    <tr key={bed._id}>
+                                    <tr key={medicalResource._id}>
 
                                         <td>{index + 1}</td>
 
-                                        <td>{bed.bedType}</td>
+                                        <td>{medicalResource.medicalResourceName}</td>
 
-                                        <td>{bed.totalBeds}</td>
+                                        <td>{medicalResource.totalMedicalResource}</td>
 
-                                        <td>{bed.availableBeds}</td>
+                                        <td>{medicalResource.availableMedicalResource}</td>
 
-                                        {(hasPermission("update_bed") ||
-                                            hasPermission("delete_bed")) && (
+                                        {(hasPermission("update_medical_resource") ||
+                                            hasPermission("delete_medical_resource")) && (
 
                                             <td className="action-buttons">
 
-                                                {hasPermission("update_bed") && (
+                                                {hasPermission("update_medical_resource") && (
 
                                                     <button
                                                         className="edit-btn"
@@ -210,11 +210,11 @@ function Bed() {
 
                                                 )}
 
-                                                {hasPermission("delete_bed") && (
+                                                {hasPermission("delete_medical_resource") && (
 
                                                     <button
                                                         className="delete-btn"
-                                                        onClick={() => deleteBed(bed._id)}
+                                                        onClick={() => deleteMedicalResources(medicalResource._id)}
                                                     >
                                                         Delete
                                                     </button>
@@ -261,4 +261,4 @@ function Bed() {
 
 }
 
-export default Bed;
+export default medicalResource;
