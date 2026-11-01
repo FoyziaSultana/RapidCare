@@ -12,6 +12,8 @@ import DashboardMainContent from "./components/DashboardComponent/dashboardMainC
 import ProtectedRoute from "./components/protectedRoute";
 import AdminGetAllHospitals from "./pages/adminGetAllHospital"
 import Bed from "./components/DashboardComponent/hospitalBed";
+import AddBed from "./components/DashboardComponent/addBed";
+import EditBed from "./components/DashboardComponent/editBed";
 
 function App() {
   return (
@@ -29,10 +31,12 @@ function App() {
 
           <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>}>
             <Route index element={<DashboardMainContent />} />
-            <Route path="hospitals" element={<AdminGetAllHospitals />} /> 
+            <Route path="hospitals" element={<AdminGetAllHospitals />} />
             <Route path="beds" element={<Bed />} />
-            </Route>
-            
+            <Route path="beds/add" element={<AddBed />} />
+            <Route path="beds/edit/:bedId" element={<EditBed />} />
+          </Route>
+
 
         </Routes>
 

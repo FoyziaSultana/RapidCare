@@ -100,10 +100,6 @@ function AdminHospitals() {
 
 
 
-
-
-
-
     const updateStatus = (hospitalId, status) => {
 
         const token = localStorage.getItem("token");

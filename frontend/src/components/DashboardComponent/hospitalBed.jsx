@@ -1,119 +1,264 @@
+
 import "./hospitalBed.css";
 import { handleError, handleSuccess } from "../../toastmsg";
 import { ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Bed() {
 
-    const [bedInfo, setBedInfo] = useState({
-        bedType: "General",
-        totalBeds: "",
-        availableBeds: ""
-    });
+    const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const [permissions, setPermissions] = useState([]);
+    const [beds, setBeds] = useState([]);
+    const [permissionLoading, setPermissionLoading] = useState(true);
 
-        const copyBedInfo = { ...bedInfo };
-        copyBedInfo[name] = value;
+    const getPermissions = () => {
 
-        setBedInfo(copyBedInfo);
+        const token = localStorage.getItem("token");
+
+        fetch(`${import.meta.env.VITE_API_URL}/userPermission/permissions`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    setPermissions(data.permissions);
+                }
+
+            })
+            .catch(error => {
+                console.log("Permission Error:", error);
+            })
+            .finally(() => {
+                setPermissionLoading(false);
+            });
+
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const hasPermission = (permissionName) => {
+        return permissions.includes(permissionName);
+        
+    };
+    
 
-        const { bedType, totalBeds, availableBeds } = bedInfo;
-
-        if (totalBeds === "" || availableBeds === "") {
-            return handleError("Fillup all information");
-        }
-
-        if (Number(totalBeds) < 0 || Number(availableBeds) < 0 || Number(availableBeds) > Number(totalBeds)
-        ) {
-            return handleError("Please enter valid bed numbers");
-        }
+    const getBeds = async () => {
 
         try {
+
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                ${import.meta.env.VITE_API_URL}/bed/create,
+                `${import.meta.env.VITE_API_URL}/bed/view`,
                 {
-                    method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: Bearer ${token}
-                    },
-                    body: JSON.stringify({
-                        bedType,
-                        totalBeds: Number(totalBeds),
-                        availableBeds: Number(availableBeds)
-                    })
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             );
 
             const result = await response.json();
 
             if (result.success) {
-                handleSuccess(result.message);
-
-                setBedInfo({
-                    bedType: "General",
-                    totalBeds: "",
-                    availableBeds: ""
-                });
+                setBeds(result.beds);
             } else {
-                handleError(result.message || "Bed creation failed");
+                handleError("Failed to load beds!");
             }
 
         } catch (error) {
-            handleError(error.message);
+
+            handleError("Something went wrong!");
+
         }
+
     };
 
+    useEffect(() => {
+
+        getBeds();
+        getPermissions();
+
+    }, []);
+
+    const deleteBed = async (bedId) => {
+
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this bed?"
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/bed/delete/${bedId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const result = await response.json();
+
+            if (result.success) {
+
+                handleSuccess(result.message);
+                getBeds();
+
+            } else {
+
+                handleError(result.message || "Bed delete failed!");
+
+            }
+
+        } catch (error) {
+
+            handleError(error.message);
+
+        }
+
+    };
+
+    if (permissionLoading) {
+        return null;
+    }
+
     return (
+
         <div className="bed-container">
 
-            <form onSubmit={handleSubmit}>
-                <h1>Create Bed</h1>
+            <div className="bed-list-header">
 
-                <div>
-                    <label htmlFor="bedType">Bed Type</label>
+                <h2>All Beds</h2>
 
-                    <select name="bedType" id="bedType" value={bedInfo.bedType} onChange={handleChange} >
-                        <option value="General">General</option>
-                        <option value="Cabin">Cabin</option>
-                        <option value="ICU">ICU</option>
-                        <option value="NICU">NICU</option>
-                        <option value="CCU">CCU</option>
-                    </select>
+                {hasPermission("create_bed") && (
+
+                    <button
+                        className="create-bed-btn"
+                        onClick={() => navigate("/dashboard/beds/add")}
+                    >
+                        + Add Bed
+                    </button>
+
+                )}
+
+            </div>
+
+            {hasPermission("view_bed") ? (
+
+                <div className="bed-table-card">
+
+                    <table className="bed-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>SL</th>
+                                <th>Bed Type</th>
+                                <th>Total Beds</th>
+                                <th>Available Beds</th>
+
+                                {(hasPermission("update_bed") ||
+                                    hasPermission("delete_bed")) && (
+
+                                    <th>Action</th>
+
+                                )}
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {beds.length > 0 ? (
+
+                                beds.map((bed, index) => (
+
+                                    <tr key={bed._id}>
+
+                                        <td>{index + 1}</td>
+
+                                        <td>{bed.bedType}</td>
+
+                                        <td>{bed.totalBeds}</td>
+
+                                        <td>{bed.availableBeds}</td>
+
+                                        {(hasPermission("update_bed") ||
+                                            hasPermission("delete_bed")) && (
+
+                                            <td className="action-buttons">
+
+                                                {hasPermission("update_bed") && (
+
+                                                    <button
+                                                        className="edit-btn"
+                                                        onClick={() =>
+                                                            navigate(`/dashboard/beds/edit/${bed._id}`)
+                                                        }
+                                                    >
+                                                        Edit
+                                                    </button>
+
+                                                )}
+
+                                                {hasPermission("delete_bed") && (
+
+                                                    <button
+                                                        className="delete-btn"
+                                                        onClick={() => deleteBed(bed._id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+
+                                                )}
+
+                                            </td>
+
+                                        )}
+
+                                    </tr>
+
+                                ))
+
+                            ) : (
+
+                                <tr>
+
+                                    <td colSpan="5">
+                                        No bed records found.
+                                    </td>
+
+                                </tr>
+
+                            )}
+
+                        </tbody>
+
+                    </table>
+
                 </div>
 
-                <div>
-                    <label htmlFor="totalBeds">Total Beds</label>
+            ) : (
 
-                    <input type="number" name="totalBeds" id="totalBeds" min="0" step="1"
-                        placeholder="Enter total beds" value={bedInfo.totalBeds} onChange={handleChange}
-                    />
-                </div>
+                <p></p>
 
-                <div>
-                    <label htmlFor="availableBeds">Available Beds</label>
-
-                    <input type="number" name="availableBeds" id="availableBeds" min="0" step="1"
-                        placeholder="Enter available beds"
-                        value={bedInfo.availableBeds}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <button type="submit">Create Bed</button>
-            </form>
+            )}
 
             <ToastContainer />
 
         </div>
+
     );
+
 }
 
 export default Bed;

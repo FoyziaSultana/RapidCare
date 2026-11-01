@@ -1,4 +1,3 @@
-
 import { Cross, Bell } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -7,114 +6,114 @@ import { isLoggedIn, logoutUser } from "../checkLoginStatus/isLoggedIn";
 
 function Navbar() {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const location = useLocation();
+    const location = useLocation();
 
-  const isDashboard = location.pathname === "/dashboard" || location.pathname === "/profile";
+    const isDashboard = location.pathname === "/dashboard" || location.pathname === "/profile";
 
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [permissions, setPermissions] = useState([]);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [permissions, setPermissions] = useState([]);
 
 
-  useEffect(() => {
+    useEffect(() => {
 
-    const checkLogin = () => {
+        const checkLogin = () => {
 
-      const loginStatus = isLoggedIn();
+            const loginStatus = isLoggedIn();
 
-      setLoggedIn(loginStatus);
+            setLoggedIn(loginStatus);
 
-      if (loginStatus) {
+            if (loginStatus) {
 
-        const token = localStorage.getItem("token");
+                const token = localStorage.getItem("token");
 
-        fetch(`${import.meta.env.VITE_API_URL}/userPermission/permissions`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
+                fetch(`${import.meta.env.VITE_API_URL}/userPermission/permissions`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
 
-            console.log("Permission Data:", data);
+                        console.log("Permission Data:", data);
 
-            if (data.success) {
-              setPermissions(data.permissions);
+                        if (data.success) {
+                            setPermissions(data.permissions);
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log("Permission Error:", error);
+                    });
+
+            } else {
+
+                setPermissions([]);
+
             }
+        };
 
-          })
-          .catch(error => {
-            console.log("Permission Error:", error);
-          });
+        checkLogin();
 
-      } else {
+        window.addEventListener("login", checkLogin);
+
+        return () => {
+            window.removeEventListener("login", checkLogin);
+        };
+
+    }, []);
+
+
+    const handleLogout = () => {
+
+        logoutUser();
+
+        setLoggedIn(false);
 
         setPermissions([]);
 
-      }
+        navigate("/");
+
     };
 
-    checkLogin();
 
-    window.addEventListener("login", checkLogin);
+    return (
 
-    return () => {
-      window.removeEventListener("login", checkLogin);
-    };
+        <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-slate-200">
 
-  }, []);
-
-
-  const handleLogout = () => {
-
-    logoutUser();
-
-    setLoggedIn(false);
-
-    setPermissions([]);
-
-    navigate("/");
-
-  };
-
-
-  return (
-
-    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-slate-200">
-
-      <nav className="max-w-7xl mx-auto h-[83px] px-6 flex items-center justify-between">
+            <nav className="max-w-7xl mx-auto h-[83px] px-6 flex items-center justify-between">
 
 
 
-        <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5">
 
-          <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center">
+                    <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center">
 
-            <Cross
-              size={20}
-              strokeWidth={3}
-              className="text-white"
-            />
+                        <Cross
+                            size={20}
+                            strokeWidth={3}
+                            className="text-white"
+                        />
 
-          </div>
-
-
-          <h1 className="text-xl font-bold tracking-tight text-slate-900">
-
-            Rapid<span className="text-teal-600">Care</span>
-
-          </h1>
-
-        </div>
+                    </div>
 
 
-        <div className="hidden md:flex items-center gap-7">
+                    <h1 className="text-xl font-bold tracking-tight text-slate-900">
+
+                        Rapid<span className="text-teal-600">Care</span>
+
+                    </h1>
+
+                </div>
 
 
-          <button
-            onClick={() => navigate("/")}
-            className="
+                <div className="hidden md:flex items-center gap-7">
+
+
+                    <button
+                        onClick={() => navigate("/")}
+                        className="
               px-3 py-2
               rounded-lg
               text-lg font-semibold
@@ -123,12 +122,12 @@ function Navbar() {
               hover:text-teal-700
               transition-colors duration-200
             "
-          >
-            Home
-          </button>
+                    >
+                        Home
+                    </button>
 
-          <button
-            className="
+                    <button
+                        className="
               px-3 py-2
               rounded-lg
               text-lg font-semibold
@@ -137,12 +136,12 @@ function Navbar() {
               hover:text-teal-700
               transition-colors duration-200
             "
-          >
-            Find Hospitals
-          </button>
+                    >
+                        Find Hospitals
+                    </button>
 
-          <button
-            className="
+                    <button
+                        className="
               px-3 py-2
               rounded-lg
               text-lg font-semibold
@@ -151,12 +150,12 @@ function Navbar() {
               hover:text-teal-700
               transition-colors duration-200
             "
-          >
-            Blood Bank
-          </button>
+                    >
+                        Blood Bank
+                    </button>
 
-          <button
-            className="
+                    <button
+                        className="
               px-3 py-2
               rounded-lg
               text-lg font-semibold
@@ -165,13 +164,13 @@ function Navbar() {
               hover:text-teal-700
               transition-colors duration-200
             "
-          >
-            Ambulance
-          </button>
+                    >
+                        Ambulance
+                    </button>
 
 
-          <button
-            className="
+                    <button
+                        className="
               px-3 py-2
               rounded-lg
               text-lg font-semibold
@@ -180,16 +179,16 @@ function Navbar() {
               hover:text-teal-700
               transition-colors duration-200
             "
-          >
-            About
-          </button>
+                    >
+                        About
+                    </button>
 
 
-          {permissions.includes("view_dashboard") && (
+                    {permissions.includes("view_dashboard") && (
 
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="
+                        <button
+                            onClick={() => navigate("/dashboard")}
+                            className="
                 px-3 py-2
                 rounded-lg
                 text-lg font-semibold
@@ -198,21 +197,21 @@ function Navbar() {
                 hover:text-teal-700
                 transition-colors duration-200
               "
-            >
-              Dashboard
-            </button>
+                        >
+                            Dashboard
+                        </button>
 
-          )}
+                    )}
 
-        </div>
-
-
-
-        <div className="flex items-center gap-4">
+                </div>
 
 
-          <button
-            className="
+
+                <div className="flex items-center gap-4">
+
+
+                    <button
+                        className="
               w-9 h-9
               flex items-center justify-center
               border border-slate-200
@@ -222,35 +221,35 @@ function Navbar() {
               hover:text-teal-600
               transition-colors duration-200
             "
-          >
+                    >
 
-            <Bell size={18} />
+                        <Bell size={18} />
 
-          </button>
+                    </button>
 
 
 
-          {!loggedIn && (
+                    {!loggedIn && (
 
-            <>
+                        <>
 
-              <button
-                onClick={() => navigate("/login")}
-                className="
+                            <button
+                                onClick={() => navigate("/login")}
+                                className="
                   text-xl font-semibold
                   text-slate-800
                   hover:text-teal-600
                   transition-colors duration-200
                 "
-              >
-                Sign in
-              </button>
+                            >
+                                Sign in
+                            </button>
 
 
 
-              <button
-                onClick={() => navigate("/signup")}
-                className="
+                            <button
+                                onClick={() => navigate("/signup")}
+                                className="
                   px-5 py-2.5
                   bg-teal-600
                   hover:bg-teal-700
@@ -261,21 +260,21 @@ function Navbar() {
                   shadow-lg
                   transition-colors duration-200
                 "
-              >
-                Get Started
-              </button>
+                            >
+                                Get Started
+                            </button>
 
-            </>
+                        </>
 
-          )}
+                    )}
 
 
 
-          {loggedIn && !isDashboard && (
+                    {loggedIn && !isDashboard && (
 
-            <button
-              onClick={handleLogout}
-              className="
+                        <button
+                            onClick={handleLogout}
+                            className="
             px-5 py-2.5
             bg-teal-400
             hover:bg-red-600
@@ -286,17 +285,17 @@ function Navbar() {
             shadow-lg
             transition-colors duration-200
         "
-            >
-              Logout
-            </button>
+                        >
+                            Logout
+                        </button>
 
-          )}
+                    )}
 
-          {loggedIn && isDashboard && (
+                    {loggedIn && isDashboard && (
 
-            <button
-              onClick={() => navigate("/")}
-              className="
+                        <button
+                            onClick={() => navigate("/")}
+                            className="
             px-5 py-2.5
             bg-teal-600
             hover:bg-teal-700
@@ -307,21 +306,20 @@ function Navbar() {
             shadow-lg
             transition-colors duration-200
         "
-            >
-              Profile
-            </button>
+                        >
+                            Profile
+                        </button>
 
-          )}
+                    )}
 
-        </div>
+                </div>
 
-      </nav>
+            </nav>
 
-    </header>
+        </header>
 
-  );
+    );
 
 }
 
 export default Navbar;
-
