@@ -98,4 +98,23 @@ const updateMedicalResource = async (req, res) => {
     }
 };
 
-module.exports = { createMedicalResource, viewMedicalResources, updateMedicalResource};
+const deleteMedicalResource = async (req, res) => {
+    try {
+        const { medicalResourceId } = req.params;
+
+        const medicalResource = await medicalResourceModel.findById(medicalResourceId);
+
+        if (!medicalResource) {
+            return res.status(404).json({ message: "This resource not found!", success: false });
+        }
+
+        await medicalResourceModel.findByIdAndDelete(medicalResourceId);
+
+        return res.status(200).json({ message: "Resource deleted successfully!", success: true });
+
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", success: false });
+    }
+};
+
+module.exports = { createMedicalResource, viewMedicalResources, updateMedicalResource, deleteMedicalResource};
