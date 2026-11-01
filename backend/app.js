@@ -17,6 +17,7 @@ const getUserAllPermissionRouter = require("./routes/getUserAllPermissionRoute")
 const dashboardRouter = require('./routes/dashboardRoute');
 const adminGetAllHospitalRouter = require("./routes/getAllHospitalRoute(Admin)");
 const bedRouter = require("./routes/bedRouter");
+const medicalResourceRouter = require("./routes/medicalResourceRouter");
 //use json
 app.use(express.json());
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use('/userPermission', getUserAllPermissionRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/dashboard', adminGetAllHospitalRouter);
 app.use("/bed", bedRouter);
+app.use("/medicalResource", medicalResourceRouter);
 
 app.get("/", (req, res) => {
     res.status(200).json({
