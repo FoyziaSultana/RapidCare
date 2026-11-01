@@ -23,7 +23,7 @@ const createMedicalResource = async (req, res) => {
         }
         const occupiedMedicalResource = totalMedicalResource - availableMedicalResource;
 
-        const medicalResource = new BedModel({ hospitalId, medicalResourceName, totalMedicalResource, occupiedMedicalResource, availableMedicalResource });
+        const medicalResource = new medicalResourceModel({ hospitalId, medicalResourceName, totalMedicalResource, occupiedMedicalResource, availableMedicalResource });
         await medicalResource.save();
         res.status(200).json({
             message: "Medical resource created successfully.", success: true
@@ -39,7 +39,35 @@ const createMedicalResource = async (req, res) => {
 
 }
 
+const viewMedicalResources = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found!", success: false
+            });
+        }
+
+        const hospitalId = user.hospitalId;
+        if (!hospitalId) {
+            return res.status(403).json({
+                message: "You are not assigned to any hospital!", success: false
+            });
+        }
+
+        const medicalResource = await medicalResourceModel.find({ hospitalId: hospitalId });
+
+        return res.status(200).json({
+            message: "Medical resource information fetched successfully.", success: true, medicalResource: medicalResource
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error", success: false
+        });
+    }
+};
 
 
-
-module.exports = { createMedicalResource};
+module.exports = { createMedicalResource, viewMedicalResources};
