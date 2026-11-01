@@ -1,5 +1,5 @@
 import {
-    Cross, Hospital, LayoutDashboard, BedDouble, Stethoscope, Ambulance,
+    Cross, Hospital, LayoutDashboard, BedDouble, BriefcaseMedical, Stethoscope, Ambulance,
     Droplets, Users, ShieldCheck, KeyRound, Settings, LogOut
 } from "lucide-react";
 
@@ -82,7 +82,7 @@ function Sidebar() {
 
                 {hasPermission("view_hospital") && (
 
-                    <Link to = "/dashboard/hospitals" className="sidebar-link">
+                    <Link to="/dashboard/hospitals" className="sidebar-link">
 
                         <Hospital size={19} />
 
@@ -96,7 +96,7 @@ function Sidebar() {
 
                 {hasPermission("view_bed") && (
 
-                    <Link to ="/dashboard/beds" className="sidebar-link">
+                    <Link to="/dashboard/beds" className="sidebar-link">
 
                         <BedDouble size={19} />
 
@@ -106,6 +106,17 @@ function Sidebar() {
 
                 )}
 
+                {hasPermission("view_medical_resource") && (
+
+                    <Link to="/dashboard/medicalResource" className="sidebar-link">
+
+                        <BriefcaseMedical size={19} />
+
+                        <span>Medical Resource</span>
+
+                    </Link>
+
+                )}
 
                 {hasPermission("view_doctor") && (
 
