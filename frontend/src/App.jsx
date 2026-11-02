@@ -15,7 +15,7 @@ import Bed from "./components/DashboardComponent/hospitalBed";
 import AddBed from "./components/DashboardComponent/addBed";
 import EditBed from "./components/DashboardComponent/editBed";
 import GetAllMedicalResource from "./components/DashboardComponent/getAllMedicalResource";
-// import addMedicalResource from "./components/DashboardComponent/addMedicalResource";
+import AddMedicalResource from "./components/DashboardComponent/addMedicalResource";
 function App() {
   return (
     <div className="App">
@@ -37,7 +37,7 @@ function App() {
             <Route path="beds/add" element={<AddBed />} />
             <Route path="beds/edit/:bedId" element={<EditBed />} />
             <Route path="medicalResource" element={<GetAllMedicalResource />} />
-            <Route path="medicalResource/add" element={<addMedicalResource />} />
+            <Route path="medicalResource/add" element={<AddMedicalResource />} />
           </Route>
 
 
