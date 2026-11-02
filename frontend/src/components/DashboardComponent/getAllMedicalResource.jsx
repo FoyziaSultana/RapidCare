@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function medicalResource() {
+function MedicalResource() {
 
     const navigate = useNavigate();
 
@@ -40,9 +40,9 @@ function medicalResource() {
 
     const hasPermission = (permissionName) => {
         return permissions.includes(permissionName);
-        
+
     };
-    
+
 
     const getMedicalResources = async () => {
 
@@ -168,62 +168,63 @@ function medicalResource() {
                                 {(hasPermission("update_medical_resource") ||
                                     hasPermission("delete_medical_resource")) && (
 
-                                    <th>Action</th>
+                                        <th>Action</th>
 
-                                )}
+                                    )}
 
                             </tr>
 
                         </thead>
 
+
                         <tbody>
 
                             {medicalResource.length > 0 ? (
 
-                                medicalResource.map((medicalResource, index) => (
+                                medicalResource.map((resource, index) => (
 
-                                    <tr key={medicalResource._id}>
+                                    <tr key={resource._id}>
 
                                         <td>{index + 1}</td>
 
-                                        <td>{medicalResource.medicalResourceName}</td>
+                                        <td>{resource.medicalResourceName}</td>
 
-                                        <td>{medicalResource.totalMedicalResource}</td>
+                                        <td>{resource.totalMedicalResource}</td>
 
-                                        <td>{medicalResource.availableMedicalResource}</td>
+                                        <td>{resource.availableMedicalResource}</td>
 
                                         {(hasPermission("update_medical_resource") ||
                                             hasPermission("delete_medical_resource")) && (
 
-                                            <td className="action-buttons">
+                                                <td className="action-buttons">
 
-                                                {hasPermission("update_medical_resource") && (
+                                                    {hasPermission("update_medical_resource") && (
 
-                                                    <button
-                                                        className="edit-btn"
-                                                        onClick={() =>
-                                                            navigate(`/dashboard/beds/edit/${bed._id}`)
-                                                        }
-                                                    >
-                                                        Edit
-                                                    </button>
+                                                        <button
+                                                            className="edit-btn"
+                                                            onClick={() =>
+                                                                navigate(`/dashboard/medicalResource/edit/${resource._id}`)
+                                                            }
+                                                        >
+                                                            Edit
+                                                        </button>
 
-                                                )}
+                                                    )}
 
-                                                {hasPermission("delete_medical_resource") && (
+                                                    {hasPermission("delete_medical_resource") && (
 
-                                                    <button
-                                                        className="delete-btn"
-                                                        onClick={() => deleteMedicalResources(medicalResource._id)}
-                                                    >
-                                                        Delete
-                                                    </button>
+                                                        <button
+                                                            className="delete-btn"
+                                                            onClick={() => deleteMedicalResources(resource._id)}
+                                                        >
+                                                            Delete
+                                                        </button>
 
-                                                )}
+                                                    )}
 
-                                            </td>
+                                                </td>
 
-                                        )}
+                                            )}
 
                                     </tr>
 
@@ -232,11 +233,9 @@ function medicalResource() {
                             ) : (
 
                                 <tr>
-
                                     <td colSpan="5">
-                                        No bed records found.
+                                        No medical resource records found.
                                     </td>
-
                                 </tr>
 
                             )}
@@ -261,4 +260,4 @@ function medicalResource() {
 
 }
 
-export default medicalResource;
+export default MedicalResource;

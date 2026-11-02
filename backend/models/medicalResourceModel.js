@@ -12,7 +12,7 @@ const medicalResourceSchema = new Schema({
     medicalResourceName: {
         type: String,
         required: true,
-        enum: ["Oxygen, Ventilator"]
+        enum: ["Oxygen" , "Ventilator"]
     },
 
     totalMedicalResource: {

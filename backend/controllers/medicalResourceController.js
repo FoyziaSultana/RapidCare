@@ -74,7 +74,7 @@ const updateMedicalResource = async (req, res) => {
         const { medicalResourceId } = req.params;
         const { medicalResourceName, totalMedicalResource, availableMedicalResource } = req.body;
 
-        const medicalResource = await medicalResourceModel.findById(bedId);
+        const medicalResource = await medicalResourceModel.findById(medicalResourceId);
 
         if (!medicalResource) {
             return res.status(404).json({ message: "This resource not found!", success: false });
