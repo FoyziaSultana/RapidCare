@@ -68,7 +68,7 @@ function Sidebar() {
 
                 {hasPermission("view_dashboard") && (
 
-                    <a href="#" className="sidebar-link active">
+                    <a href="#" className="sidebar-link">
 
                         <LayoutDashboard size={19} />
 
