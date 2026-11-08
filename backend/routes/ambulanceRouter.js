@@ -3,9 +3,10 @@ const router = express.Router();
 
 const authMiddleware = require("../middleware/authMiddleware");
 const permissionMiddleware = require("../middleware/permissionMiddlewareForaccess");
-const { addAmbulance, updateAmbulance } = require("../controllers/ambulanceController");
+const { addAmbulance, updateAmbulance, getAllAmbulance } = require("../controllers/ambulanceController");
 
 router.post("/add", authMiddleware, permissionMiddleware("add_ambulance"), addAmbulance);
+router.get("/view", authMiddleware, permissionMiddleware("view_ambulance"), getAllAmbulance);
 router.put("/update/:ambulanceId", authMiddleware, permissionMiddleware("update_ambulance", updateAmbulance));
 router.delete("/delete/:ambulanceId", authMiddleware, permissionMiddleware("delete_ambulance"));
 
