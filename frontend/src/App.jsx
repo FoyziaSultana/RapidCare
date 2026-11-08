@@ -20,6 +20,9 @@ import EditMedicalResource from "./components/DashboardComponent/editMedicalReso
 import AdminAmbulance from "./components/DashboardComponent/ambulanceManagement";
 import AddAmbulance from "./components/DashboardComponent/addAmbulance";
 import EditAmbulance from "./components/DashboardComponent/editAmbulance";
+import BloodManagement from "./components/DashboardComponent/bloodManagement";
+import AddBlood from "./components/DashboardComponent/addBlood";
+import EditBlood from "./components/DashboardComponent/editBlood";
 
 function App() {
   return (
@@ -47,8 +50,10 @@ function App() {
             <Route path="ambulances" element={<AdminAmbulance/>} />
             <Route path="ambulances/add" element={<AddAmbulance/>} />
             <Route path="ambulances/update/:ambulanceId" element={<EditAmbulance/>} />
+            <Route path="bloods" element={<BloodManagement/>} />
+            <Route path="bloods/add" element={<AddBlood/>} />
+            <Route path="bloods/update/:bloodId" element={<EditBlood/>} />
           </Route>
-
 
         </Routes>
 

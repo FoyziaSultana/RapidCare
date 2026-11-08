@@ -70,5 +70,95 @@ const getAllBlood = async (req, res) => {
     }
 };
 
+const updateBlood = async (req, res) => {
+    try {
+        const { bloodId } = req.params;
+        const { bloodGroup, totalBags, availableBags } = req.body;
 
-module.exports = { addBlood, getAllBlood};
+        const user = await UserModel.findById(req.user._id).populate("roles", "roleName");
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found!" });
+        }
+
+        const isAdmin = user.roles.some(
+            role => role.roleName.toLowerCase().trim() === "admin"
+        );
+
+        let filter = { _id: bloodId };
+
+        if (!isAdmin) {
+            if (!user.hospitalId) {
+                return res.status(403).json({ success: false, message: "You are not assigned to any hospital!" });
+            }
+
+            filter.hospitalId = user.hospitalId;
+        }
+
+        const blood = await BloodModel.findOne(filter);
+
+        if (!blood) {
+            return res.status(404).json({ success: false, message: "Blood information not found!" });
+        }
+
+        if (!bloodGroup || !["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].includes(bloodGroup)) {
+            return res.status(400).json({ success: false, message: "Invalid blood group!"});
+        }
+
+        if ( !Number.isInteger(Number(totalBags)) || !Number.isInteger(Number(availableBags)) || Number(totalBags) < 0 || Number(availableBags) < 0 || Number(availableBags) > Number(totalBags) ) {
+            return res.status(400).json({ success: false, message: "Invalid blood bag information!"
+            });
+        }
+
+        blood.bloodGroup = bloodGroup;
+        blood.totalBags = Number(totalBags);
+        blood.availableBags = Number(availableBags);
+        blood.updatedAt = Date.now();
+
+        await blood.save();
+
+        return res.status(200).json({success: true, message: "Blood information updated successfully!", blood });
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Server error" });
+    }
+};
+
+
+const deleteBlood = async (req, res) => {
+    try {
+        const { bloodId } = req.params;
+
+        const user = await UserModel.findById(req.user._id).populate("roles", "roleName");
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found!"});
+        }
+
+        const isAdmin = user.roles.some(
+            role => role.roleName.toLowerCase().trim() === "admin"
+        );
+
+        let filter = { _id: bloodId };
+
+        if (!isAdmin) {
+            if (!user.hospitalId) {
+                return res.status(403).json({ success: false, message: "You are not assigned to any hospital!"});
+            }
+
+            filter.hospitalId = user.hospitalId;
+        }
+
+        const blood = await BloodModel.findOneAndDelete(filter);
+
+        if (!blood) {
+            return res.status(404).json({ success: false, message: "Blood information not found!" });
+        }
+
+        return res.status(200).json({ success: true, message: "Blood information deleted successfully!" });
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Internal server error!" });
+    }
+};
+module.exports = { addBlood, getAllBlood, updateBlood, deleteBlood};

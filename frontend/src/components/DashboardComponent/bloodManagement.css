@@ -1,0 +1,141 @@
+
+.blood-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.blood-header {
+    margin-bottom: 25px;
+}
+
+.blood-header h1 {
+    margin: 0 0 8px;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.blood-add {
+    padding: 10px 18px;
+    margin-left: 85%;
+    border: none;
+    border-radius: 7px;
+    background: #0d9488;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.blood-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.blood-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.blood-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 10px;
+}
+
+.blood-title h2 {
+    margin: 0;
+    font-size: 19px;
+}
+
+.blood-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.blood-table {
+    width: 100%;
+    min-width: 550px;
+    border-collapse: collapse;
+}
+
+.blood-table th,
+.blood-table td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.blood-table th {
+    background: #f5f7fa;
+}
+
+.blood-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.blood-actions button {
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.blood-edit,
+.blood-delete {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.blood-edit {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.blood-edit:hover {
+    background: #bae6fd;
+}
+
+.blood-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.blood-delete:hover {
+    background: #fecaca;
+}
+
+.blood-message {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
+
+@media (max-width: 600px) {
+
+    .blood-container {
+        padding: 12px;
+    }
+
+    .blood-title h2 {
+        font-size: 16px;
+    }
+
+    .blood-card {
+        padding: 12px;
+    }
+
+}

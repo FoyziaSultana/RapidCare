@@ -144,15 +144,15 @@ function Sidebar() {
                 )}
 
 
-                {hasPermission("view_blood_bank") && (
+                {hasPermission("view_blood") && (
 
-                    <a href="#" className="sidebar-link">
+                    <Link to="/dashboard/bloods" className="sidebar-link">
 
                         <Droplets size={19} />
 
                         <span>Blood Bank</span>
 
-                    </a>
+                    </Link>
 
                 )}
 
