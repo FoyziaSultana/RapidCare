@@ -3,11 +3,11 @@ const router = express.Router();
 
 const authMiddleware = require("../middleware/authMiddleware");
 const permissionMiddleware = require("../middleware/permissionMiddlewareForaccess");
-const { addAmbulance, updateAmbulance, getAllAmbulance } = require("../controllers/ambulanceController");
+const { addAmbulance, updateAmbulance, getAllAmbulance, deleteAmbulance } = require("../controllers/ambulanceController");
 
 router.post("/add", authMiddleware, permissionMiddleware("add_ambulance"), addAmbulance);
 router.get("/view", authMiddleware, permissionMiddleware("view_ambulance"), getAllAmbulance);
-router.put("/update/:ambulanceId", authMiddleware, permissionMiddleware("update_ambulance", updateAmbulance));
-router.delete("/delete/:ambulanceId", authMiddleware, permissionMiddleware("delete_ambulance"));
+router.put("/update/:ambulanceId", authMiddleware, permissionMiddleware("update_ambulance"), updateAmbulance);
+router.delete("/delete/:ambulanceId", authMiddleware, permissionMiddleware("delete_ambulance"), deleteAmbulance);
 
 module.exports = router;

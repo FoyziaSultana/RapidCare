@@ -1,0 +1,135 @@
+.amb-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.amb-header {
+    margin-bottom: 25px;
+}
+
+.amb-header h1 {
+    margin: 0 0 8px;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.amb-add {
+    padding: 10px 18px;
+    margin-left: 85%;
+    border: none;
+    border-radius: 7px;
+    background: #0d9488;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.amb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.amb-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.amb-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 10px;
+}
+
+.amb-title h2 {
+    margin: 0;
+    font-size: 19px;
+}
+
+
+.amb-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.amb-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+.amb-table th,
+.amb-table td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.amb-table th {
+    background: #f5f7fa;
+}
+.amb-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.amb-actions button {
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.amb-edit, .amb-delete{
+    padding: 7px 14px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.amb-edit {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.amb-edit:hover {
+    background: #bae6fd;
+}
+
+.amb-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.amb-delete:hover {
+    background: #fecaca;
+}
+
+.amb-message {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
+
+@media (max-width: 600px) {
+    .amb-container {
+        padding: 12px;
+    }
+
+    .amb-title h2 {
+        font-size: 16px;
+    }
+
+    .amb-card {
+        padding: 12px;
+    }
+}

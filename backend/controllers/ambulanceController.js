@@ -1,22 +1,42 @@
 const AmbulanceModel = require('../models/ambulanceModel');
 const UserModel = require("../models/userSchema");
+const HospitalModel = require("../models/HospitalRegisterModel");
 const addAmbulance = async (req, res) => {
     try {
-        const { vehicalNumber, ambulanceDriverName, ambulanceDriverPhone } = req.body;
-        const user = await UserModel.findById(req.user._id);
+        const { vehicalNumber, ambulanceDriverName, ambulanceDriverPhone, hospitalId } = req.body;
+        const user = await UserModel.findById(req.user._id).populate("roles", "roleName");
         if (!user) {
             return res.status(404).json({
                 message: "User not found!", success: false
             });
         }
-        const hospitalId = user.hospitalId;
-        if (!hospitalId) {
-            return res.status(403).json({
-                message: "You are not assigned to any hospital!", success: false
+        const isAdmin = user.roles.some(
+            role => role.roleName.toLowerCase().trim() === "admin"
+        );
+        let selectedHospitalId;
+        if (isAdmin) {
+            selectedHospitalId = hospitalId;
+
+            if (!selectedHospitalId) {
+                return res.status(400).json({ message: "Please select a hospital!", success: false });
+            }
+        }
+        else {
+            selectedHospitalId = user.hospitalId;
+
+            if (!selectedHospitalId) {
+                return res.status(403).json({ message: "You are not assigned to any hospital!", success: false });
+            }
+        }
+        const hospital = await HospitalModel.findById(selectedHospitalId);
+        if (!hospital || hospital.status !== "approved") {
+            return res.status(404).json({
+                message: "Approved hospital not found!",
+                success: false
             });
         }
 
-        const ambulance = new AmbulanceModel({ hospitalId, vehicalNumber, ambulanceDriverName, ambulanceDriverPhone });
+        const ambulance = new AmbulanceModel({ hospitalId: selectedHospitalId, vehicalNumber, ambulanceDriverName, ambulanceDriverPhone });
         await ambulance.save();
         res.status(200).json({
             message: "Ambulance added succesfully.", success: true
@@ -34,25 +54,24 @@ const addAmbulance = async (req, res) => {
 }
 
 const getAllAmbulance = async (req, res) => {
-try {
-    const ambulances = await AmbulanceModel.find().populate("hospitalId", "hospitalName");
-    
-    return res.status(200).json({
-        success: true, ambulances
-    });
-}
-catch(error)
-{
-    return res.status(500).json({
-        success: false, message: "Failed to get ambulances"
-    });
-}
+    try {
+        const ambulances = await AmbulanceModel.find().populate("hospitalId", "hospitalName");
+
+        return res.status(200).json({
+            success: true, ambulances
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false, message: "Failed to get ambulances"
+        });
+    }
 };
 
 const updateAmbulance = async (req, res) => {
     try {
         const { ambulanceId } = req.params;
-        const { vehicalNumber, ambulanceDriverName, ambulanceDriverPhone} = req.body;
+        const { vehicalNumber, ambulanceDriverName, ambulanceDriverPhone } = req.body;
         const user = await UserModel.findById(req.user._id);
         if (!user) {
             return res.status(404).json({ message: "User not found!", success: false });
@@ -77,7 +96,7 @@ const updateAmbulance = async (req, res) => {
         await ambulance.save();
 
         res.status(200).json({
-            message: "Ambulance information updated successfully!",
+            message: "Information updated successfully!",
             success: true,
             ambulance
         });
@@ -119,4 +138,4 @@ const deleteAmbulance = async (req, res) => {
         res.status(500).json({ message: "Server error!", success: false });
     }
 };
-module.exports = {addAmbulance, getAllAmbulance, updateAmbulance, deleteAmbulance};
+module.exports = { addAmbulance, getAllAmbulance, updateAmbulance, deleteAmbulance };

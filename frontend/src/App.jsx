@@ -17,6 +17,9 @@ import EditBed from "./components/DashboardComponent/editBed";
 import GetAllMedicalResource from "./components/DashboardComponent/getAllMedicalResource";
 import AddMedicalResource from "./components/DashboardComponent/addMedicalResource";
 import EditMedicalResource from "./components/DashboardComponent/editMedicalResource";
+import AdminAmbulance from "./components/DashboardComponent/ambulanceManagement";
+import AddAmbulance from "./components/DashboardComponent/addAmbulance";
+import EditAmbulance from "./components/DashboardComponent/editAmbulance";
 
 function App() {
   return (
@@ -41,6 +44,9 @@ function App() {
             <Route path="medicalResource" element={<GetAllMedicalResource />} />
             <Route path="medicalResource/add" element={<AddMedicalResource />} />
             <Route path="medicalResource/edit/:medicalResourceId" element={<EditMedicalResource />} />
+            <Route path="ambulances" element={<AdminAmbulance/>} />
+            <Route path="ambulances/add" element={<AddAmbulance/>} />
+            <Route path="ambulances/update/:ambulanceId" element={<EditAmbulance/>} />
           </Route>
 
 

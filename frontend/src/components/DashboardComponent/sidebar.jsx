@@ -133,13 +133,13 @@ function Sidebar() {
 
                 {hasPermission("view_ambulance") && (
 
-                    <a href="#" className="sidebar-link">
+                    <Link to="/dashboard/ambulances" className="sidebar-link">
 
                         <Ambulance size={19} />
 
                         <span>Ambulance</span>
 
-                    </a>
+                    </Link>
 
                 )}
 
