@@ -33,6 +33,22 @@ const addAmbulance = async (req, res) => {
 
 }
 
+const getAllAmbulance = async (req, res) => {
+try {
+    const ambulances = await AmbulanceModel.find().populate("hospitalId", "hospitalName");
+    
+    return res.status(200).json({
+        success: true, ambulances
+    });
+}
+catch(error)
+{
+    return res.status(500).json({
+        success: false, message: "Failed to get ambulances"
+    });
+}
+};
+
 const updateAmbulance = async (req, res) => {
     try {
         const { ambulanceId } = req.params;
@@ -103,4 +119,4 @@ const deleteAmbulance = async (req, res) => {
         res.status(500).json({ message: "Server error!", success: false });
     }
 };
-module.exports = {addAmbulance, updateAmbulance, deleteAmbulance};
+module.exports = {addAmbulance, getAllAmbulance, updateAmbulance, deleteAmbulance};
