@@ -6,7 +6,7 @@ const HospitalModel = require("../models/HospitalRegisterModel");
 const addBlood = async (req, res) => {
 
     try {
-        
+
         const { bloodGroup, totalBags, availableBags, hospitalId } = req.body;
 
         const user = await UserModel.findById(req.user._id).populate("roles", "roleName");
@@ -59,6 +59,16 @@ const addBlood = async (req, res) => {
 
 };
 
+const getAllBlood = async (req, res) => {
+    try {
+        const bloods = await BloodModel.find().populate("hospitalId", "hospitalName");
+
+        return res.status(200).json({ success: true, message: "Blood information fetched successfully!", bloods });
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Server error!" });
+    }
+};
 
 
-module.exports = { addBlood};
+module.exports = { addBlood, getAllBlood};
