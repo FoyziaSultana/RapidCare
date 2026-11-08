@@ -20,6 +20,7 @@ const bedRouter = require("./routes/bedRouter");
 const medicalResourceRouter = require("./routes/medicalResourceRouter");
 const hospitalCardRouter = require("./routes/hospitalCardRouter");
 const ambulanceRouter = require("./routes/ambulanceRouter");
+
 //use json
 app.use(express.json());
 app.use(bodyParser.json());
@@ -37,6 +38,7 @@ app.use("/bed", bedRouter);
 app.use("/medicalResource", medicalResourceRouter);
 app.use("/hospital", hospitalCardRouter);
 app.use("/ambulance", ambulanceRouter);
+
 
 app.get("/", (req, res) => {
     res.status(200).json({
