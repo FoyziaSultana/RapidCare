@@ -31,21 +31,15 @@ function AdminHospitals() {
 
             .then(data => {
 
-                console.log("Hospitals:", data);
-
                 if (data.success) {
                     setHospitals(data.hospitals);
                 }
 
             })
 
-            .catch(error => {
-                console.log("Hospital Error:", error);
-            });
+            .catch(error => {});
 
     };
-
-
 
 
 
@@ -68,9 +62,7 @@ function AdminHospitals() {
                 }
             })
 
-            .catch(error => {
-                console.log("Permission Error:", error);
-            });
+            .catch(error => {});
 
     };
 
@@ -83,11 +75,6 @@ function AdminHospitals() {
     const hasPermission = (permissionName) => {
         return permissions.includes(permissionName);
     };
-
-
-
-
-
 
 
     useEffect(() => {
@@ -135,19 +122,9 @@ function AdminHospitals() {
 
             })
 
-            .catch(error => {
-
-                console.log("Status Error:", error);
-
-            });
+            .catch(error => {});
 
     };
-
-
-
-
-
-
 
 
 
@@ -160,8 +137,6 @@ function AdminHospitals() {
     const handleEditHospitalInformation = (hospital) => {
         setEditedHospitalInformation(hospital);
     }
-
-
 
 
     {/* update funtion for updating hospital data */ }
@@ -198,8 +173,6 @@ function AdminHospitals() {
 
             .then(data => {
 
-                console.log("Hospital Update:", data);
-
                 if (data.success) {
 
                     setEditedHospitalInformation(null);
@@ -211,11 +184,7 @@ function AdminHospitals() {
                 }
             })
 
-            .catch(error => {
-
-                console.log("Update Error:", error);
-
-            });
+            .catch(error => {});
     };
 
 
@@ -249,9 +218,7 @@ function AdminHospitals() {
             else {
                 handleError(data.message || "Hospital delete failed!");
             }
-        } catch (error) {
-            handleError(error);
-        }
+        } catch (error) {}
     };
 
     return (

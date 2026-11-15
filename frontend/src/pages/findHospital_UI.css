@@ -1,0 +1,134 @@
+
+.find-hospital {
+    min-height: 100vh;
+    background: #f8fafc;
+    padding: 45px 25px;
+}
+
+.find-hospital-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.find-hospital-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.find-hospital-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.find-hospital-header p {
+    color: #64748b;
+    margin-top: 8px;
+}
+
+.hospital-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.hospital-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.hospital-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.hospital-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.hospital-logo {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hospital-title h3 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.hospital-type {
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 4px;
+    text-transform: capitalize;
+}
+
+.hospital-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.hospital-info p {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.hospital-info svg {
+    color: #0d9488;
+    flex-shrink: 0;
+}
+
+.hospital-details-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    background: #27c2ad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hospital-details-btn:hover {
+    background: #14b8a6;
+}
+
+.hospital-message {
+    text-align: center;
+    color: #64748b;
+}
+
+@media (max-width: 900px) {
+    .hospital-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .hospital-list {
+        grid-template-columns: 1fr;
+    }
+
+    .find-hospital {
+        padding: 30px 16px;
+    }
+}

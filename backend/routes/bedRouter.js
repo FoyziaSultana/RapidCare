@@ -9,4 +9,5 @@ router.post("/create", authMiddleware, permissionMiddleware("create_bed"),create
 router.get("/view", authMiddleware, permissionMiddleware("view_bed"), viewBeds);
 router.put("/update/:bedId", authMiddleware, permissionMiddleware("update_bed"), updateBed);
 router.delete("/delete/:bedId", authMiddleware, permissionMiddleware("delete_bed"),deleteBed);
+router.get("/view/:hospitalId", viewBeds);
 module.exports = router;

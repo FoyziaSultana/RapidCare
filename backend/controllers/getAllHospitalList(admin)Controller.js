@@ -59,7 +59,6 @@ const updateHospitalStatus = async (req, res) => {
 
     }
     catch (error) {
-        console.error("Hospital Status Update Error:", error);
         res.status(500).json({ message: "Server error", success: false });
     }
 };

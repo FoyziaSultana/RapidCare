@@ -1,5 +1,6 @@
 const BedModel = require('../models/hospitalBedModel');
 const UserModel = require("../models/userSchema");
+const HospitalModel = require("../models/HospitalRegisterModel");
 const createBed = async (req, res) => {
     try {
         const { bedType, totalBeds, availableBeds } = req.body;
@@ -43,19 +44,19 @@ const createBed = async (req, res) => {
 
 const viewBeds = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.user._id);
+        let hospitalId;
 
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found!", success: false
-            });
-        }
+        if (req.user) {
+            const user = await UserModel.findById(req.user._id);
+            hospitalId = user.hospitalId;
+        } else {
+            hospitalId = req.params.hospitalId;
 
-        const hospitalId = user.hospitalId;
-        if (!hospitalId) {
-            return res.status(403).json({
-                message: "You are not assigned to any hospital!", success: false
-            });
+            const hospital = await HospitalModel.findOne({ _id: hospitalId, status: "approved" });
+
+            if (!hospital) {
+                return res.status(404).json({ message: "Hospital not found!", success: false });
+            }
         }
 
         const beds = await BedModel.find({ hospitalId: hospitalId });
@@ -118,4 +119,4 @@ const deleteBed = async (req, res) => {
         return res.status(500).json({ message: "Server error", success: false });
     }
 };
-module.exports = { createBed, viewBeds, updateBed, deleteBed  };
+module.exports = { createBed, viewBeds, updateBed, deleteBed };

@@ -1,0 +1,184 @@
+
+.ambulance-container {
+    width: 100%;
+    padding: 35px 7%;
+    background: #f8fafc;
+    min-height: calc(100vh - 83px);
+
+}
+
+.ambulance-header {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.ambulance-header span {
+    display: inline-block;
+    color: #0369a1;
+    background: #e0f2fe;
+    padding: 7px 17px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-top: 0px;
+}
+
+.ambulance-header h2 {
+    color: #172033;
+    font-size: 34px;
+    font-weight: 750;
+    margin: 16px 0 10px;
+}
+
+
+.ambulance-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.ambulance-card {
+    background: #ffffff;
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+    transition: 0.3s ease;
+}
+
+.ambulance-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+    border-color: #fecaca;
+}
+
+.ambulance-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ambulance-hospital-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    background: #fff1f2;
+    border-radius: 13px;
+}
+
+.ambulance-title h3 {
+    color: #172033;
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 5px;
+}
+
+.ambulance-title p {
+    color: #4b77b1;
+    font-size: 13px;
+    margin: 0;
+}
+
+.ambulance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.ambulance-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ece7e733;
+    border: 1px solid #fee2e2;
+    border-radius: 16px;
+    padding: 10px 30px;
+    color: #dc2626;
+    transition: 0.25s ease;
+}
+
+.ambulance-item:hover {
+    background: #fff1f2;
+    border-color: #fca5a5;
+    transform: scale(1.03);
+}
+
+.ambulance-item h4 {
+    color: #3f3636;
+    font-size: 19px;
+    font-weight: 750;
+    margin: 7px 0 5px;
+}
+
+.ambulance-item h3 {
+    color: #172033;
+    font-size: 20px;
+    font-weight: 650;
+    margin: 2px 0 4px;
+}
+
+.ambulance-item p {
+    color: #606975;
+    font-size: 15px;
+    margin: 0;
+}
+.ambulance-item a {
+    color: black;
+    font-size: 15px;
+    margin: 0;
+    padding: 5px;
+    border-radius: 7px;
+    font-weight: 200px;
+}
+
+.ambulance-message {
+    text-align: center;
+    color: #64748b;
+    padding: 35px 15px;
+    font-size: 15px;
+}
+
+@media (max-width: 1000px) {
+    .ambulance-list {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 550px) {
+    .ambulance-container {
+        padding: 45px 16px;
+    }
+
+    .ambulance-header h2 {
+        font-size: 26px;
+    }
+
+    .ambulance-header p {
+        font-size: 13px;
+    }
+
+    .ambulance-card {
+        padding: 17px;
+    }
+
+    .ambulance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .ambulance-item {
+        padding: 15px 5px;
+    }
+}

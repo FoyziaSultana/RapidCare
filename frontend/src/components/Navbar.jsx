@@ -14,7 +14,7 @@ function Navbar() {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [permissions, setPermissions] = useState([]);
-
+    const [active, setActive] = useState("home");
 
     useEffect(() => {
 
@@ -112,73 +112,37 @@ function Navbar() {
 
 
                     <button
-                        onClick={() => navigate("/")}
-                        className="
-              px-3 py-2
-              rounded-lg
-              text-lg font-semibold
-              text-slate-600
-              hover:bg-teal-50
-              hover:text-teal-700
-              transition-colors duration-200
-            "
+                        onClick={() => { setActive("home"); navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`px-3 py-2 rounded-lg text-lg font-semibold ${active === "home" ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-teal-50 hover:text-teal-700"}`}
                     >
                         Home
                     </button>
 
                     <button
-                        className="
-              px-3 py-2
-              rounded-lg
-              text-lg font-semibold
-              text-slate-600
-              hover:bg-teal-50
-              hover:text-teal-700
-              transition-colors duration-200
-            "
+                        onClick={() => { setActive("findHospital"); navigate("/find-hospitals"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`px-3 py-2 rounded-lg text-lg font-semibold ${active === "findHospital" ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-teal-50 hover:text-teal-700"}`}
                     >
                         Find Hospitals
                     </button>
 
                     <button
-                        className="
-              px-3 py-2
-              rounded-lg
-              text-lg font-semibold
-              text-slate-600
-              hover:bg-teal-50
-              hover:text-teal-700
-              transition-colors duration-200
-            "
+                        onClick={() => { setActive("bloodBank"); navigate("/blood-banks"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`px-3 py-2 rounded-lg text-lg font-semibold ${active === "bloodBank" ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-teal-50 hover:text-teal-700"}`}
                     >
                         Blood Bank
                     </button>
 
                     <button
-                        className="
-              px-3 py-2
-              rounded-lg
-              text-lg font-semibold
-              text-slate-600
-              hover:bg-teal-50
-              hover:text-teal-700
-              transition-colors duration-200
-            "
+                        onClick={() => { setActive("ambulance"); navigate("/ambulances"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`px-3 py-2 rounded-lg text-lg font-semibold ${active === "ambulance" ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-teal-50 hover:text-teal-700"}`}
                     >
                         Ambulance
                     </button>
 
 
                     <button
-                        className="
-              px-3 py-2
-              rounded-lg
-              text-lg font-semibold
-              text-slate-600
-              hover:bg-teal-50
-              hover:text-teal-700
-              transition-colors duration-200
-            "
+                        onClick={() => { setActive("about"); navigate("/about"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`px-3 py-2 rounded-lg text-lg font-semibold ${active === "about" ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-teal-50 hover:text-teal-700"}`}
                     >
                         About
                     </button>
@@ -187,17 +151,9 @@ function Navbar() {
                     {permissions.includes("view_dashboard") && (
 
                         <button
-                            onClick={() => navigate("/dashboard")}
-                            className="
-                px-3 py-2
-                rounded-lg
-                text-lg font-semibold
-                text-slate-600
-                hover:bg-teal-50
-                hover:text-teal-700
-                transition-colors duration-200
-              "
-                        >
+                        onClick={() => { setActive("dashboard"); navigate("/dashboard"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        className={`px-3 py-2 rounded-lg text-lg font-semibold ${active === "dashboard" ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-teal-50 hover:text-teal-700"}`}
+                    >
                             Dashboard
                         </button>
 
@@ -211,16 +167,7 @@ function Navbar() {
 
 
                     <button
-                        className="
-              w-9 h-9
-              flex items-center justify-center
-              border border-slate-200
-              rounded-lg
-              text-slate-600
-              hover:bg-slate-50
-              hover:text-teal-600
-              transition-colors duration-200
-            "
+                        className=" w-9 h-9 flex items-center justify-center border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-teal-600 transition-colors duration-200 "
                     >
 
                         <Bell size={18} />
@@ -235,12 +182,7 @@ function Navbar() {
 
                             <button
                                 onClick={() => navigate("/login")}
-                                className="
-                  text-xl font-semibold
-                  text-slate-800
-                  hover:text-teal-600
-                  transition-colors duration-200
-                "
+                                className=" text-xl font-semibold text-slate-800 hover:text-teal-600 transition-colors duration-200 "
                             >
                                 Sign in
                             </button>
@@ -249,17 +191,7 @@ function Navbar() {
 
                             <button
                                 onClick={() => navigate("/signup")}
-                                className="
-                  px-5 py-2.5
-                  bg-teal-600
-                  hover:bg-teal-700
-                  text-white
-                  text-lg
-                  font-semibold
-                  rounded-lg
-                  shadow-lg
-                  transition-colors duration-200
-                "
+                                className=" px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold rounded-lg shadow-lg transition-colors duration-200 "
                             >
                                 Get Started
                             </button>
@@ -274,17 +206,7 @@ function Navbar() {
 
                         <button
                             onClick={handleLogout}
-                            className="
-            px-5 py-2.5
-            bg-teal-400
-            hover:bg-red-600
-            text-white
-            text-lg
-            font-semibold
-            rounded-lg
-            shadow-lg
-            transition-colors duration-200
-        "
+                            className=" px-5 py-2.5 bg-teal-400 hover:bg-red-600 text-white text-lg font-semibold rounded-lg shadow-lg transition-colors duration-200 "
                         >
                             Logout
                         </button>
@@ -295,17 +217,7 @@ function Navbar() {
 
                         <button
                             onClick={() => navigate("/")}
-                            className="
-            px-5 py-2.5
-            bg-teal-600
-            hover:bg-teal-700
-            text-white
-            text-lg
-            font-semibold
-            rounded-lg
-            shadow-lg
-            transition-colors duration-200
-        "
+                            className=" px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold rounded-lg shadow-lg transition-colors duration-200 "
                         >
                             Profile
                         </button>

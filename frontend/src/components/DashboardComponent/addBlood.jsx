@@ -34,7 +34,7 @@ function AddBlood() {
                     setPermissions(data.permissions);
                 }
             })
-            .catch(error =>(error));
+            .catch(() => { })
 
         fetch(`${import.meta.env.VITE_API_URL}/hospital/approved`)
             .then(response => response.json())

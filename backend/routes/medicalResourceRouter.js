@@ -10,4 +10,5 @@ router.post("/create", authMiddleware, permissionMiddleware("create_medical_reso
 router.get("/view", authMiddleware, permissionMiddleware("view_medical_resource"), viewMedicalResources);
 router.put("/update/:medicalResourceId", authMiddleware, permissionMiddleware("update_medical_resource"), updateMedicalResource);
 router.delete("/delete/:medicalResourceId", authMiddleware, permissionMiddleware("delete_medical_resource"),deleteMedicalResource);
+router.get("/view/:hospitalId", viewMedicalResources);
 module.exports = router;

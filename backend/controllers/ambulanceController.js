@@ -56,12 +56,13 @@ const addAmbulance = async (req, res) => {
 const getAllAmbulance = async (req, res) => {
     try {
         const ambulances = await AmbulanceModel.find().populate("hospitalId", "hospitalName");
-
+        console.log("Ambulance Data:", ambulances);
         return res.status(200).json({
             success: true, ambulances
         });
     }
     catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false, message: "Failed to get ambulances"
         });

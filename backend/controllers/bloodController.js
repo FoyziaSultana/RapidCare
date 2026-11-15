@@ -61,12 +61,37 @@ const addBlood = async (req, res) => {
 
 const getAllBlood = async (req, res) => {
     try {
-        const bloods = await BloodModel.find().populate("hospitalId", "hospitalName");
+        let bloods;
 
-        return res.status(200).json({ success: true, message: "Blood information fetched successfully!", bloods });
+        if (req.params.hospitalId) {
+
+            const hospital = await HospitalModel.findOne({
+                _id: req.params.hospitalId,
+                status: "approved"
+            });
+
+            if (!hospital) {
+                return res.status(404).json({
+                    message: "Hospital not found!", success: false
+                });
+            }
+
+            bloods = await BloodModel.find({
+                hospitalId: req.params.hospitalId
+            });
+
+        } else {
+
+            bloods = await BloodModel.find() .populate("hospitalId", "hospitalName");
+        }
+
+        return res.status(200).json({ success: true,
+            message: "Blood information fetched successfully",
+            bloods: bloods
+        });
 
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Server error!" });
+        return res.status(500).json({ success: false, message: "Server error" });
     }
 };
 

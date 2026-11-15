@@ -50,23 +50,34 @@ const getApprovedHospitals = async (req, res) => {
 
         );
 
-        return res.status(200).json({
-            message: "Approved hospitals fetched successfully!",
-            success: true,
-            hospitals: hospitalList
-        });
+        return res.status(200).json({ message: "Approved hospitals fetched successfully!", success: true, hospitals: hospitalList });
 
     } catch (error) {
 
-        console.log(error);
-
-        return res.status(500).json({
-            message: "Server error!",
-            success: false
-        });
+        return res.status(500).json({ message: "Server error", success: false });
 
     }
 
 };
+const getHospitalDetails = async (req, res) => {
 
-module.exports = { getApprovedHospitals };
+    try {
+
+        const { hospitalId } = req.params;
+
+        const hospital = await HospitalModel.findOne({ _id: hospitalId, status: "approved" });
+
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found!", success: false });
+        }
+
+        return res.status(200).json({ message: "Hospital details fetched successfully", success: true, hospital });
+
+    } catch (error) {
+
+        return res.status(500).json({ message: "Server error", success: false });
+
+    }
+
+};
+module.exports = { getApprovedHospitals, getHospitalDetails };

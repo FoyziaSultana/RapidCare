@@ -1,5 +1,6 @@
 const medicalResourceModel = require('../models/medicalResourceModel');
 const UserModel = require("../models/userSchema");
+const HospitalModel = require("../models/HospitalRegisterModel");
 const createMedicalResource = async (req, res) => {
     try {
         const { medicalResourceName, totalMedicalResource, availableMedicalResource } = req.body;
@@ -41,25 +42,46 @@ const createMedicalResource = async (req, res) => {
 
 const viewMedicalResources = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.user._id);
+        let hospitalId;
 
-        if (!user) {
-            return res.status(404).json({
-                message: "User not found!", success: false
-            });
-        }
+        if (req.user) {
+            const user = await UserModel.findById(req.user._id);
 
-        const hospitalId = user.hospitalId;
-        if (!hospitalId) {
-            return res.status(403).json({
-                message: "You are not assigned to any hospital!", success: false
+            if (!user) {
+                return res.status(404).json({
+                    message: "User not found!", success: false
+                });
+            }
+
+            hospitalId = user.hospitalId;
+
+            if (!hospitalId) {
+                return res.status(403).json({
+                    message: "You are not assigned to any hospital!", success: false
+                });
+            }
+
+        } else {
+            hospitalId = req.params.hospitalId;
+
+            const hospital = await HospitalModel.findOne({
+                _id: hospitalId,
+                status: "approved"
             });
+
+            if (!hospital) {
+                return res.status(404).json({
+                    message: "Hospital not found!", success: false
+                });
+            }
         }
 
         const medicalResource = await medicalResourceModel.find({ hospitalId: hospitalId });
 
         return res.status(200).json({
-            message: "Medical resource information fetched successfully.", success: true, medicalResource: medicalResource
+            message: "Medical resource information fetched successfully.",
+            success: true,
+            medicalResource: medicalResource
         });
 
     } catch (error) {

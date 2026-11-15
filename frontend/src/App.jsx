@@ -23,6 +23,11 @@ import EditAmbulance from "./components/DashboardComponent/editAmbulance";
 import BloodManagement from "./components/DashboardComponent/bloodManagement";
 import AddBlood from "./components/DashboardComponent/addBlood";
 import EditBlood from "./components/DashboardComponent/editBlood";
+import FindHospitals from "./pages/findHospital_UI";
+import BloodBank from "./pages/bloodBank_UI";
+import AmbulanceView from "./pages/ambulance_UI";
+import About from "./pages/about_UI";
+import HospitalDetails from "./pages/hospitalDetails_UI";
 
 function App() {
   return (
@@ -36,7 +41,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/hospitalRegister" element={<HospitalRegistration />} />
-
+          <Route path="/find-hospitals" element={<FindHospitals />} />
+          <Route path="/blood-banks" element={<BloodBank />} />
+          <Route path="/ambulances" element={<AmbulanceView />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/hospital/:hospitalId" element={<HospitalDetails />} />
 
           <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>}>
             <Route index element={<DashboardMainContent />} />

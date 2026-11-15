@@ -2,10 +2,10 @@ import { Search, ArrowRight, LocateFixed, Siren, Activity, BedDouble, HeartPulse
 
 function Hero() {
     return (
-        <section className=" bg-gradient-to-br from-slate-50 via-white to-teal-50/40">
+        <section className=" bg-gradient-to-br from-slate-50 via-white to-teal-50/40" id="hero">
             <div className=" max-w-7xl mx-auto px-6">
 
-                <div className="min-h-[420px] py-10 lg:py-12 grid lg:grid-cols-2 gap-14 items-center">
+                <div className="min-h-[620px] py-10 lg:py-12 grid lg:grid-cols-2 gap-14 items-center">
 
                     <div>
 
