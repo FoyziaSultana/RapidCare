@@ -1,5 +1,5 @@
 
-import "./AmbulanceManagement.css";
+import "./ambulanceManagement.css";
 import { useState, useEffect } from "react";
 import { handleError, handleSuccess } from "../../toastmsg";
 import { ToastContainer } from "react-toastify";
